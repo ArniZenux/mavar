@@ -1,16 +1,21 @@
-var express = require('express');
-var Router = require('./routes/route.js');
-var path = require("path");
-var app = express(); 
+const express = require('express');
+var routes = require('./routes/route.js');
+const path = require("path");
+const app = express(); 
 
 const hostname = "127.0.0.1";
 const port = 3000; 
 
+app.set('views', path.join(__dirname,'views'));
 app.set('view engine', 'ejs');
-app.use('views', path.join(__dirname,'views'));
+
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(Router);
+app.use('/', routes);
+
+/*app.get('/', (req, res) => {
+    res.send('Hello');
+});*/
 
 function notFoundHandler(req, res, next) { // eslint-disable-line
     const title = 'Myndband fannst ekki';
