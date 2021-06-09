@@ -1,12 +1,7 @@
-{
-    "tulkar": [
-        {
-            "id" : "1",
-            "nafn" : "Árný"
-        },
-        {
-            "id" : "2",
-            "nafn" : "Þóra" 
-        }
-    ]
+{ 
+    "name": "Sara",
+    "age": 23,
+    "gender": "Female",
+    "department": "History",
+    "car": "Honda"
 }
