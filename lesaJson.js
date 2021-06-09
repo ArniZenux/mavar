@@ -17,4 +17,4 @@ function lesa1(){
     let list = fs.readFile('./routes/tulkar.json');
 }
 
-lesa1();
+lesa();

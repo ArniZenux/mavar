@@ -2,6 +2,9 @@ Verkefnalist -
 
 #8-6-2021
 -100%   laga git og allt er komið. 
--0%     virkjar json
--0%     ná úr json og birta á user.ejs
+-100%   virkjar json
+-100%   lesa json og birta í console.log
+
+#10-6-2020
+-0%     lesa file úr json og birta á user.ejs
 
