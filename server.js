@@ -20,7 +20,7 @@ app.use('/', routes);
 function notFoundHandler(req, res, next) { // eslint-disable-line
     const title = 'Myndband fannst ekki';
     const subtitle = 'Myndbandið sem þú ert að leita að finnst ekki 😨';
-    //res.status(404).render('error', { title, subtitle });
+    res.status(404).render('error', { title, subtitle });
     res.send('Ekk finnst - 404');
 }
   
@@ -28,8 +28,8 @@ function errorHandler(err, req, res, next) { // eslint-disable-line
     console.error(err);
     const title = 'Villa kom upp';
     const subtitle = err.message;
-    //res.status(500).render('error', { title, subtitle });
-    res.send('Error - 404');
+    res.status(500).render('error', { title, subtitle });
+    //res.send('Error - 404');
 }
 
 app.use(notFoundHandler);

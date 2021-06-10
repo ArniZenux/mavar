@@ -72,15 +72,26 @@ async function index(req, res){
 
 async function user(req, res){
     const title = 'Táknmálstúlkar';
-     
-    console.log('notendur');
-    res.render('users', { title });
+
+    const { videos } = await lesa(); 
+    
+    if(!videos){
+        return next();
+    }
+
+    res.render('users', { title, videos : videos });
 }
 
 async function project(req, res){
     const title = 'Verkefnalisti táknmálstúlka';
-    console.log('notendur');
-    res.render('projects', { title });
+    
+    const { videos } = await lesa(); 
+
+    if(!videos){
+        return next(); 
+    }
+    
+    res.render('projects', { title, videos : videos });
 }
 
 router.get('/', catchErrors(index));

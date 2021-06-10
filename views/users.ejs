@@ -2,10 +2,13 @@
 
 <h1 class="header__title"><%= title %></h1>
 
-<p> Hello world - user </p> 
-
 <a href="/">Home</span></a>
 <a href="user">User</a>
 <a href="project">project</a>
+
+<h2> Lista af túlkum </h2>
+<% videos.forEach(function(obj) { %>
+<h4> <%= obj.Name %> </h4>
+<% }) %>
 
 <% include('footer') %> 

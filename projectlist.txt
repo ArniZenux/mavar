@@ -6,5 +6,7 @@ Verkefnalist -
 -100%   lesa json og birta í console.log
 
 #10-6-2020
--0%     lesa file úr json og birta á user.ejs
+-100%   lesa file úr json og birta á user.ejs
+-100%   birta lika á project.ejs
+-100%   handle error if something gone wrong. 
 
