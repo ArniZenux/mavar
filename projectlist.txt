@@ -10,3 +10,7 @@ Verkefnalist -
 -100%   birta lika á project.ejs
 -100%   handle error if something gone wrong. 
 
+
+#Add 
+- css 
+
