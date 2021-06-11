@@ -1,3 +1,4 @@
+const db = require('./db.js');
 const express = require('express');
 const fs = require('fs').promises;
 const router = express.Router(); 
@@ -45,6 +46,12 @@ async function lesa(){
             await openFile_.close(); 
         }
     }
+}
+
+async function lesaSql(){
+    //var registrations = await db.list(); 
+    //console.log(registrations); 
+    await db.list(); 
 }
 
 async function lesaSkra(){
@@ -100,6 +107,8 @@ router.get('/user', catchErrors(user));
 
 router.get('/project', catchErrors(project));
 
-router.get('/lesaSkra', catchErrors(lesaSkra)); 
+router.get('/lesaSkra', catchErrors(lesaSkra));
+
+router.get('/lesaSql', catchErrors(lesaSql)); 
 
 module.exports = router; 

@@ -10,7 +10,13 @@ Verkefnalist -
 -100%   birta lika á project.ejs
 -100%   handle error if something gone wrong. 
 
+#11-6-2020
+-100%   add fake.sql and schame.sql 
+-0%     work with sqlite and let it works in node
 
-#Add 
-- css 
-
+Plan in project in future. 
+- CSS 
+- React 
+- Sql-postgresql 
+- Injure
+- XXS 
