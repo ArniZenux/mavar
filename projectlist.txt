@@ -12,7 +12,9 @@ Verkefnalist -
 
 #11-6-2020
 -100%   add fake.sql and schame.sql 
--0%     work with sqlite and let it works in node
+-100%   work with sqlite and let it works in node
+-0%     print list of tulkurData.db. 
+
 
 Plan in project in future. 
 - CSS 
