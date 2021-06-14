@@ -51,7 +51,22 @@ async function lesa(){
 async function lesaSql(){
     //var registrations = await db.list(); 
     //console.log(registrations); 
-    await db.list(); 
+    var sql = 'Select * from tblTulkur'; 
+    var params = []; 
+    console.log("hello");
+    try {
+        db.all(sql,params, (err, rows) => {
+            if(err){
+                console.log(err.message);
+            }
+            else{
+                console.log(rows);
+            }
+        });
+    }
+    catch(e){
+        throw new Error('Can´t read sql database');
+    }
 }
 
 async function lesaSkra(){
