@@ -1,5 +1,7 @@
 const express = require('express');
 var routes = require('./routes/route.js');
+var indexRouter = require('./routes/index');
+var userRouter = require('./routes/user');
 const path = require("path");
 const app = express(); 
 
@@ -11,7 +13,9 @@ app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use('/', routes);
+//app.use('/', routes);
+app.use('/', indexRouter); 
+app.use('/user', userRouter); 
 
 /*app.get('/', (req, res) => {
     res.send('Hello');

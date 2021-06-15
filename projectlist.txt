@@ -5,16 +5,23 @@ Verkefnalist -
 -100%   virkjar json
 -100%   lesa json og birta í console.log
 
-#10-6-2020
+#10-6-2021
 -100%   lesa file úr json og birta á user.ejs
 -100%   birta lika á project.ejs
 -100%   handle error if something gone wrong. 
 
-#11-6-2020
+#11-6-2021
 -100%   add fake.sql and schame.sql 
 -100%   work with sqlite and let it works in node
--0%     print list of tulkurData.db. 
+-100%   print list of tulkurData.db by other program without route. lesaSql.js and db.js do works well.  
 
+#14-6-2021
+-0%    Read database with route-mávar by database.js do not works well. 
+-100%  reyna að búa til forrit getur lesið á database og birta á route. Work well. /tilraun 
+
+#15-6-2021
+-0%    Read database with route by database.js 
+-100%  change and add app.use. Add for user.js and index.js. It works better. More training and add more knwolegde! 
 
 Plan in project in future. 
 - CSS 

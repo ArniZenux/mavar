@@ -1,4 +1,5 @@
-const db = require('./db.js');
+//const db = require('../database/db.js');
+var dataModel = require('../models/data_model.js');
 const express = require('express');
 const fs = require('fs').promises;
 const router = express.Router(); 
@@ -49,9 +50,14 @@ async function lesa(){
 }
 
 async function lesaSql(){
+    dataModel.readTable("tblTulkur", function(data){
+        console.log(data); 
+    });
+}
+/*async function lesaSql(){
     //var registrations = await db.list(); 
     //console.log(registrations); 
-    var sql = 'Select * from tblTulkur'; 
+    var sql = "select * from tblTulkur"
     var params = []; 
     console.log("hello");
     try {
@@ -67,7 +73,7 @@ async function lesaSql(){
     catch(e){
         throw new Error('Can´t read sql database');
     }
-}
+}*/
 
 async function lesaSkra(){
     //const student = await lesaAnnad();
