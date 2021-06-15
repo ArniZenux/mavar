@@ -32,30 +32,17 @@ function catchErrors(fn){
     }
 }
 
-/*async function users(req, res){
-    const title = 'Táknmálstúlkar';
+async function project(req, res){
+    const title = 'Verkefnalisti táknmálstúlka';
 
     const { videos } = await lesa(); 
     
     if(!videos){
         return next();
     }
-    
-    //res.render('users', { title });
-    res.render('users', { title, videos : videos });
-}*/
-
-async function users(req, res){
-    const title = 'Táknmálstúlkar';
-    const sql = "SELECT * FROM tblTulkur"; 
-    dataModel.db.all(sql, [], (err, rows) => {
-        if(err){
-            return console.error(err.message); 
-        }
-        res.render('users', {title, model: rows});
-    });
+    res.render('projects', { title, videos : videos });
 }
 
-router.get('/', catchErrors(users));
+router.get('/', catchErrors(project));
 
 module.exports = router; 

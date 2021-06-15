@@ -15,4 +15,4 @@ function readTable (table, cb) {
     });
 };
 
-module.exports = { readTable }
+module.exports = { db,  readTable }

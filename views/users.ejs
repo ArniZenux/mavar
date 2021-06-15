@@ -11,4 +11,12 @@
 <h4> <%= obj.Name %> </h4>
 <% }) %>
 
+<br> 
+
+<% for (const notandi of model) { %>
+    <li>
+      <%= notandi.NAFN %>
+    </li>
+  <% } %>
+
 <% include('footer') %> 

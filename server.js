@@ -2,6 +2,7 @@ const express = require('express');
 var routes = require('./routes/route.js');
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
+var projectRouter = require('./routes/project');
 const path = require("path");
 const app = express(); 
 
@@ -16,6 +17,7 @@ app.use(express.static(path.join(__dirname, "public")));
 //app.use('/', routes);
 app.use('/', indexRouter); 
 app.use('/user', userRouter); 
+app.use('/project', projectRouter);
 
 /*app.get('/', (req, res) => {
     res.send('Hello');
