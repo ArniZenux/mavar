@@ -1,7 +1,9 @@
 //const db = require('../database/db.js');
-var dataModel = require('../models/data_model.js');
+//var dataModel = require('../models/data_model.js');
+var db = require('../database/db.js');
 const express = require('express');
 const fs = require('fs').promises;
+const { resourceUsage } = require('process');
 const router = express.Router(); 
 
 function catchErrors(fn){
@@ -46,16 +48,22 @@ function catchErrors(fn){
 }*/
 
 async function users(req, res){
-    const title = 'Táknmálstúlkar';
+    /*const test = {
+        title : 'Táknmálstúlkur', 
+        items : ['one', 'two', 'three']
+    };*/
+   
     const sql = "SELECT * FROM tblTulkur"; 
-    dataModel.db.all(sql, [], (err, rows) => {
-        if(err){
-            return console.error(err.message); 
-        }
-        res.render('users', {title, model: rows});
+    db.all(sql, [], (err, rows) => {
+        if(err) return console.error(err.message);
+        res.render('users', {title : 'Táknamálstúlkur', model : rows }); 
     });
+    /*dataModel.readTable("tblTulkur", function(data) {
+        res.render('users', {title: 'Táknmálstúlkur', model : data});            
+    
+    });*/
 }
-
+    
 router.get('/', catchErrors(users));
 
 module.exports = router; 

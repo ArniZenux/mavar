@@ -6,17 +6,14 @@
 <a href="user">User</a>
 <a href="project">project</a>
 
-<h1> Lista af túlkum </h1>
-<% videos.forEach(function(obj) { %>
-<h4> <%= obj.Name %> </h4>
-<% }) %>
+<ul>
+  <% for(let book of model) { %>
+  <li>
+    <%= book.ID%>
+  </li>
+  <% } %> 
+</ul>
 
 <br> 
-
-<% for (const notandi of model) { %>
-    <li>
-      <%= notandi.NAFN %>
-    </li>
-  <% } %>
 
 <% include('footer') %> 
