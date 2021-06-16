@@ -16,12 +16,23 @@ Verkefnalist -
 -100%   print list of tulkurData.db by other program without route. lesaSql.js and db.js do works well.  
 
 #14-6-2021
--0%    Read database with route-mávar by database.js do not works well. 
+-100%    Read database with route-mávar by database.js do not works well. 
 -100%  reyna að búa til forrit getur lesið á database og birta á route. Work well. /tilraun 
 
 #15-6-2021
--0%    Read database with route by database.js 
+-100%    Read database with route by database.js 
 -100%  change and add app.use. Add for user.js and index.js. It works better. More training and add more knwolegde! 
+
+#16-6-2021
+-100% Náði við því að ná í samband við database og birta í users.ejs án þess að nota data_model.js. 
+-0%     Create new user
+-0%     Update user. 
+
+
+# later
+-0%     admin 
+-0%     user, pass login
+
 
 Plan in project in future. 
 - CSS 
