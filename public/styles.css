@@ -65,6 +65,10 @@
     text-align: center;
   }
   
+  button.add {
+    background-color: rgb(210, 210, 220);
+  }
+
   form {
     display: flex;
     flex-direction: column;

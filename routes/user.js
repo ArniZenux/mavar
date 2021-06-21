@@ -63,7 +63,7 @@ async function users(req, res){
     
     });*/
 }
-    
+
 router.get('/', catchErrors(users));
 
 module.exports = router; 

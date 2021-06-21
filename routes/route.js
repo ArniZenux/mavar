@@ -110,6 +110,12 @@ async function user(req, res){
     res.render('users', { title, videos : videos });
 }
 
+async function adduser(req, res){
+    const title = 'Bæta nýr táknmálstúlk';
+    
+    res.render('addusers', { title });
+}
+
 async function project(req, res){
     const title = 'Verkefnalisti táknmálstúlka';
     
@@ -127,6 +133,8 @@ router.get('/', catchErrors(index));
 router.get('/user', catchErrors(user));
 
 router.get('/project', catchErrors(project));
+
+router.get('/adduser', catchErrors(adduser));
 
 router.get('/lesaSkra', catchErrors(lesaSkra));
 

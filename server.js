@@ -3,6 +3,7 @@ var routes = require('./routes/route.js');
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
 var projectRouter = require('./routes/project');
+var adduserRouter = require('./routes/adduser');
 const path = require("path");
 const app = express(); 
 
@@ -18,16 +19,16 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use('/', indexRouter); 
 app.use('/user', userRouter); 
 app.use('/project', projectRouter);
+app.use('/adduser', adduserRouter);
 
 /*app.get('/', (req, res) => {
     res.send('Hello');
 });*/
 
 function notFoundHandler(req, res, next) { // eslint-disable-line
-    const title = 'Myndband fannst ekki';
-    const subtitle = 'Myndbandið sem þú ert að leita að finnst ekki 😨';
-    res.status(404).render('error', { title, subtitle });
-    res.send('Ekk finnst - 404');
+    const title = 'Síða fannst ekki';
+    res.status(404).render('error', { title });
+    //res.send('Ekk finnst - 404');
 }
   
 function errorHandler(err, req, res, next) { // eslint-disable-line

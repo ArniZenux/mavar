@@ -28,11 +28,17 @@ Verkefnalist -
 -0%     Create new user
 -0%     Update user. 
 
+#21-6-2021
+-100%   Add adduser.ejs
+-100%   login.ejs but ekki virkar ennþá 
+
+ath: þarf að breyta router úr app.js og búa til indexrouter.js. app.js er bara server-side en indexrouter.js er middlelayer
+sé um routing fyrir síðuna. Líka þarf að búa til user.js með 
+add_user() og update_user() og lika get_list_user()
 
 # later
 -0%     admin 
 -0%     user, pass login
-
 
 Plan in project in future. 
 - CSS 
