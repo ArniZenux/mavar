@@ -2,7 +2,7 @@
   "name": "mavar",
   "version": "1.0.0",
   "description": "Mávar - túlksþjónustan",
-  "main": "server.js",
+  "main": "server_simply.js",
   "dependencies": {
     "ejs": "^3.1.6",
     "express": "^4.17.1",

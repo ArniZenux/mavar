@@ -7,6 +7,31 @@
 <a href="project">project</a>
 
 <br> 
-<h2> Nýr túlkur hérna</h2>
+<h2> Skrá hérna </h2>
+
+<form method="post" action="/addusers">
+
+    <div class="field">
+      <label for="nationalId">Kennitala * </label>
+      <input type="text" name="KT" value="KT" >
+    </div>  
+    
+    <div class="field">
+      <label for="name">Nafn * </label>
+      <input type="text" name="NAFN" value="NAFN" >
+    </div>
+      
+    <div class="field">
+      <label for="nationalId">Símanúmer * </label>
+      <input type="text" name="SIMI" value="SIMI" >
+    </div>
+
+    <div class="field">
+      <label for="nationalId">Netfang * </label>
+      <input type="text" name="NETFANG" value="NETFANG" >
+    </div>
+    
+    <button>Skrifa undir</button>
+  </form>
 
 <% include('footer') %> 

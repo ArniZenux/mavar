@@ -53,16 +53,24 @@ async function users(req, res){
         items : ['one', 'two', 'three']
     };*/
    
-    const sql = "SELECT * FROM tblTulkur"; 
-    db.all(sql, [], (err, rows) => {
-        if(err) return console.error(err.message);
-        res.render('users', {title : 'Táknamálstúlkur', model : rows }); 
-    });
+    const sql = "SELECT * FROM tblTulkur";
+    try{
+        db.all(sql, [], (err, rows) => {
+            if(err) return console.error(err.message);
+            res.render('users', {title : 'Táknamálstúlkur', model : rows }); 
+        });
+    }
+    catch(e){
+        console.error(e);
+    }
+    
     /*dataModel.readTable("tblTulkur", function(data) {
         res.render('users', {title: 'Táknmálstúlkur', model : data});            
     
     });*/
 }
+
+
 
 router.get('/', catchErrors(users));
 

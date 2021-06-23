@@ -30,12 +30,12 @@ function notFoundHandler(req, res, next) { // eslint-disable-line
     res.status(404).render('error', { title });
     //res.send('Ekk finnst - 404');
 }
-  
+        
 function errorHandler(err, req, res, next) { // eslint-disable-line
     console.error(err);
     const title = 'Villa kom upp';
-    const subtitle = err.message;
-    res.status(500).render('error', { title, subtitle });
+    //const subtitle = err.message;
+    res.status(500).render('error', { title });
     //res.send('Error - 404');
 }
 

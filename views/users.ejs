@@ -6,18 +6,20 @@
 <a href="user">User</a>
 <a href="project">project</a>
 
+<h3>Listi af táknmálstúlkum</h1> 
+
 <ul>
-  <% for(let book of model) { %>
+  <% for(let user of model) { %>
   <li>
-    <%= book.NAFN%>
+    <%= user.NAFN%>
   </li>
   <% } %> 
 </ul>
 
 <br> 
 <h3>Add new</h3>
-<a href="adduser">Add user</a>
+<a href="addusers">Add user</a>
 
-<button>asdf</button>
+<button>Skrifa undir</button> 
 
 <% include('footer') %> 

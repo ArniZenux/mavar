@@ -16,14 +16,29 @@ function catchErrors(fn){
    
 }*/
 
-async function addusers(req, res){
-    const title = 'Táknamálstúlkur';
+async function User(req, res){
+    const title = 'Bæta nýr táknamálstúlk';
     //const { tulkar } = await readList(); 
     //const readList();
     console.log('Request for home rec');
     res.render('addusers', { title });
 }
     
-router.get('/', catchErrors(addusers));
+async function adduser(req, res){
+    const sql = "INSERT INTO tblTulkur (KT, NAFN, SIMI, NETFANG) VALEUS ( ?, ? , ? , ? )";
+    const tulkur = [req.body.KT, req.body.NAFN, req.body.SIMI, req.body.NETFANG];
+    try{
+        db.run(sql, tulkur, err => {
+            // if (err) ... 
+            res.redirect('/');
+        });
+    }
+    catch(e){
+        console.error(e); 
+    }
+    
+}
 
+router.get('/', catchErrors(User));
+router.post('/', catchErrors(adduser)); 
 module.exports = router; 
