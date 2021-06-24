@@ -56,7 +56,7 @@ function catchErrors(fn){
 }
 
 async function index(req, res){
-    const title = 'Mávar';
+    const title = 'Mávar - túlkuþjónusta';
     console.log('Main home - index');
     res.render('index', { title });
 }

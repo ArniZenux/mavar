@@ -1,0 +1,31 @@
+<%- include('header') -%>
+
+<h1><%= title %></h1>
+
+<a href="/">Home</span></a>
+<a href="user">User</a>
+<a href="project">project</a>
+
+<div class="container-fluid">
+
+  <h3>Listi af táknmálstúlkum</h1> 
+
+  <h1>Hello, world!</h1>
+
+  <ul>
+    <% for(let user of model) { %>
+    <li>
+      <%= user.NAFN%>
+    </li>
+    <% } %> 
+  </ul>
+
+  <br> 
+  <h3>Add new</h3>
+  <a href="addusers">Add user</a>
+
+  <button>Skrifa undir</button> 
+
+</div>
+
+<%- include('footer') -%> 

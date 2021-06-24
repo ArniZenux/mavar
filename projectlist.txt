@@ -36,6 +36,16 @@ Verkefnalist -
 -0%     Bæta notandi í sqlite - gekk illa. getur ekki lest req.body.KT - veit ekki af hverju 
 -100%   búa til nýja server_simply.js án þess að nota router. Bara app.post() og app.get() - Gekk illa með req.body.KT
 
+#24-6-2021
+-100%   bæta eyðaSql, updateSql, skraSql.js til að virka á node.js - virkjar vel. 
+-100%   Bootstrap virkar núna ásamt header.ejs. Gleymdi að bæta við '-' í <%- header.ejs -%> 
+
+#25-6-2021
+-0%     að koma post í virkjar og hægt að skrá nýr túlk inná kerfi 
+-0%     skrá verkefni 
+-0%     tengja túlk í verkefni. Þetta er javascript. 
+-0%     nota router og búa til fleira router - userRouter, ProjectRouter. 
+
 ath: þarf að breyta router úr app.js og búa til indexrouter.js. app.js er bara server-side en indexrouter.js er middlelayer
 sé um routing fyrir síðuna. Líka þarf að búa til user.js með 
 add_user() og update_user() og lika get_list_user()
@@ -50,3 +60,8 @@ Plan in project in future.
 - Sql-postgresql 
 - Injure
 - XXS 
+- add calender - dagbók 
+- time schema 
+- add custumor - viðskiptavinur
+- add fyrirtæki
+

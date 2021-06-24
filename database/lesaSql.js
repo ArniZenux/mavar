@@ -1,4 +1,4 @@
-const db = require('./db.js');
+const db = require('./db_fix.js');
 
 async function lesa(){
     var sql = 'Select * from tblTulkur'; 
@@ -14,3 +14,9 @@ async function lesa(){
 }
 
 lesa(); 
+
+db.close((err) => {
+    if(err) {
+        return console.error(err.message); 
+    }
+}); 

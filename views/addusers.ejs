@@ -1,37 +1,37 @@
-<% include('header') %>
+<%- include('header') -%>
 
-<h1 class="header__title"><%= title %></h1>
 
 <a href="/">Home</span></a>
 <a href="user">User</a>
 <a href="project">project</a>
 
-<br> 
+<h2 class="header__title"><%= title %></h2>
+ 
 <h2> Skrá hérna </h2>
 
 <form method="post" action="/addusers">
 
     <div class="field">
       <label for="nationalId">Kennitala * </label>
-      <input type="text" name="KT" value="KT" >
+      <input type="text" name="KT" value="Kennitala" >
     </div>  
     
     <div class="field">
       <label for="name">Nafn * </label>
-      <input type="text" name="NAFN" value="NAFN" >
+      <input type="text" name="NAFN" value="Túlks nafn" >
     </div>
       
     <div class="field">
       <label for="nationalId">Símanúmer * </label>
-      <input type="text" name="SIMI" value="SIMI" >
+      <input type="text" name="SIMI" value="Símanúmer" >
     </div>
 
     <div class="field">
       <label for="nationalId">Netfang * </label>
-      <input type="text" name="NETFANG" value="NETFANG" >
+      <input type="text" name="NETFANG" value="Tölvupósur" >
     </div>
     
-    <button>Skrifa undir</button>
+    <button class="btn btn-sm btn-success">Vista</button>
   </form>
 
-<% include('footer') %> 
+<%- include('footer') -%> 

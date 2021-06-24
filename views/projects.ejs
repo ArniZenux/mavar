@@ -1,15 +1,17 @@
-<% include('header') %>
-
-<h1 class="header__title"><%= title %></h1>
+<%- include('header') -%>
 
 <a href="/">Home</span></a>
 <a href="user">User</a>
 <a href="project">project</a>
 
-<h2> Lista af túlkunarverkefni </h2>
-<% videos.forEach(function(obj) { %>
-<h4> <%= obj.description %> </h4>
-<% }) %>
+<h2 class="header__title"><%= title %></h2>
 
+<ul>
+    <% videos.forEach(function(obj) { %>
+      <li>
+        <%= obj.description %> 
+      </li>
+    <% }) %>
+</ul>
 
-<% include('footer') %> 
+<%- include('footer') -%> 
