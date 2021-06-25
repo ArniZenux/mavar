@@ -41,7 +41,8 @@ Verkefnalist -
 -100%   Bootstrap virkar núna ásamt header.ejs. Gleymdi að bæta við '-' í <%- header.ejs -%> 
 
 #25-6-2021
--0%     að koma post í virkjar og hægt að skrá nýr túlk inná kerfi 
+-100%   að koma post í virkjar og hægt að skrá nýr túlk inná kerfi 
+-0%     búa til verkefni - input form sollis...
 -0%     skrá verkefni 
 -0%     tengja túlk í verkefni. Þetta er javascript. 
 -0%     nota router og búa til fleira router - userRouter, ProjectRouter. 

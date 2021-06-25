@@ -4,6 +4,7 @@ const express = require('express');
 //var userRouter = require('./routes/user');
 //var projectRouter = require('./routes/project');
 //var adduserRouter = require('./routes/adduser');
+var bodyParser = require('body-parser')
 const path = require("path");
 const fs = require('fs').promises;
 const app = express(); 
@@ -12,10 +13,11 @@ var db = require('./database/db.js');
 const hostname = "127.0.0.1";
 const port = 3000; 
 
+var urlencodedParser = bodyParser.urlencoded({ extended: false});
+
 app.set('views', path.join(__dirname,'views'));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, "public")));
-
 
 /*app.use('/', indexRouter); 
 app.use('/user', userRouter); 
@@ -112,13 +114,19 @@ app.get('/project', catchErrors(project));
 app.get('/addusers', catchErrors(addUsers));
 
 //app.post('/insertUser', catchErrors(insertUser));
-app.post('/addusers', (req, res) => {
-    const sql = "INSERT INTO tblTulkur (KT, NAFN, SIMI, NETFANG) VALEUS ( ?, ? , ? , ? )";
+app.post('/addusers', urlencodedParser,  (req, res) => {
+    const sql = "INSERT INTO tblTulkur (KT, NAFN, SIMI, NETFANG) VALUES( ? , ? , ? , ? )";
     const tulkur = [req.body.KT, req.body.NAFN, req.body.SIMI, req.body.NETFANG];
+    
     try{
         db.run(sql, tulkur, err => {
-            // if (err) ... 
-            res.redirect('/');
+            if (err){
+                console.error(err.message); 
+            } 
+            else{
+                res.redirect('/');
+                console.log('Tokst að skra');
+            }
         });
     }
     catch(e){
