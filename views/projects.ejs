@@ -6,12 +6,35 @@
 
 <h2 class="header__title"><%= title %></h2>
 
-<ul>
-    <% videos.forEach(function(obj) { %>
-      <li>
-        <%= obj.description %> 
-      </li>
-    <% }) %>
-</ul>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Heiti</th>
+      <th>Staður</th>
+      <th>Dagur</th>
+      <th>Byrja</th>
+      <th>Endir</th>
+      <th>Vettvangur</th>
+      <th class="d-print-none">
+        <a class="btn btn-sm btn-success" href="addprojects">Bæta</a>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for(let project of model) { %>
+    <tr>
+      <td><%= project.HEITI %></td>
+      <td><%= project.STADUR %></td>
+      <td><%= project.DAGUR %></td>
+      <td><%= project.TIMI_BYRJA %></td>
+      <td><%= project.TIMI_ENDIR %></td>
+      <td><%= project.VETTVANGUR %></td>
+      <td>
+        <a class="btn btn-sm btn-warning" href="">Uppfæra</a>
+      </td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
 
 <%- include('footer') -%> 

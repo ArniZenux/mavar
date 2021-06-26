@@ -42,10 +42,11 @@ Verkefnalist -
 
 #25-6-2021
 -100%   að koma post í virkjar og hægt að skrá nýr túlk inná kerfi 
--0%     búa til verkefni - input form sollis...
+-100%   Breyta view í project og bæta nýtt addproject
 -0%     skrá verkefni 
 -0%     tengja túlk í verkefni. Þetta er javascript. 
 -0%     nota router og búa til fleira router - userRouter, ProjectRouter. 
+-0%     Bæta Nav fyrir home, user, project og new project. 
 
 ath: þarf að breyta router úr app.js og búa til indexrouter.js. app.js er bara server-side en indexrouter.js er middlelayer
 sé um routing fyrir síðuna. Líka þarf að búa til user.js með 
@@ -54,6 +55,7 @@ add_user() og update_user() og lika get_list_user()
 # later
 -0%     admin 
 -0%     user, pass login
+-0%     birta verkefnalist á hverju einni túlks. 
 
 Plan in project in future. 
 - CSS 
