@@ -1,0 +1,45 @@
+<%- include('header') -%>
+
+<a href="/">Home</span></a>
+<a href="user">User</a>
+<a href="project">project</a>
+
+<h2 class="header__title"><%= title %></h2>
+ 
+<h2> Skrá hérna </h2>
+
+<form method="post" action="/addprojects">
+
+    <div class="field">
+      <label for="nationalId">Heiti * </label>
+      <input type="text" name="HEITI" value="Heiti" >
+    </div>  
+    
+    <div class="field">
+      <label for="name">Staður * </label>
+      <input type="text" name="STADUR" value="Staður" >
+    </div>
+      
+    <div class="field">
+      <label for="nationalId">Dagur * </label>
+      <input type="text" name="DAGUR" value="Dagur" >
+    </div>
+
+    <div class="field">
+      <label for="nationalId">Byrja * </label>
+      <input type="text" name="BYRJA" value="Byrja" >
+    </div>
+    
+    <div class="field">
+      <label for="nationalId">Endir * </label>
+      <input type="text" name="ENDIR" value="Endir" >
+    </div>
+
+    <div class="field">
+      <label for="nationalId">Vettvangur * </label>
+      <input type="text" name="VETTVANGUR" value="Vettvangur" >
+    </div>
+    <button class="btn btn-sm btn-success">Vista</button>
+  </form>
+
+<%- include('footer') -%> 

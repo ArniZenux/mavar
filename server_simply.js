@@ -80,6 +80,7 @@ async function user(req, res){
 }
 
 async function project(req, res){
+<<<<<<< HEAD
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Verkefnalisti táknmálstúlka';
 
@@ -89,6 +90,19 @@ async function project(req, res){
         return next();
     }
     res.render('projects', { title, subtitle, videos : videos });
+=======
+    const title = 'Verkefnalisti táknmálstúlka';
+    const sql = "SELECT * FROM tblVerkefni";
+    try{
+        db.all(sql, [], (err, rows) => {
+            if(err) return console.error(err.message); 
+            res.render('projects', {title: title, model : rows});
+        });
+    }
+    catch(e){
+        console.error(e.message); 
+    }
+>>>>>>> 6b6f61b6f0bbbc872d12bece547477275d282dbc
 }
 
 async function addUsers(req, res){
@@ -98,6 +112,12 @@ async function addUsers(req, res){
     res.render('addusers', { title, subtitle });
 }
     
+async function addProjects(req, res){
+    const title = 'Bæta nýtt verkefni'; 
+    console.log('new project - ');
+    res.render('addprojects', { title });
+}
+
 async function insertUser(req, res){
     const sql = "INSERT INTO tblTulkur (KT, NAFN, SIMI, NETFANG) VALEUS ( ?, ? , ? , ? )";
     const tulkur = [req.body.KT, req.body.NAFN, req.body.SIMI, req.body.NETFANG];
@@ -110,13 +130,13 @@ async function insertUser(req, res){
     catch(e){
         console.error(e); 
     }
-    
 }
 
 app.get('/', catchErrors(index));
 app.get('/user', catchErrors(user)); 
 app.get('/project', catchErrors(project));
 app.get('/addusers', catchErrors(addUsers));
+app.get('/addprojects', catchErrors(addProjects)); 
 
 //app.post('/insertUser', catchErrors(insertUser));
 app.post('/addusers', urlencodedParser,  (req, res) => {
