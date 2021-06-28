@@ -50,8 +50,9 @@ Verkefnalist -
 -100%   Búa til verkefni - input form sollis...
 -100%   Bæta Nav fyrir home, user, project og new project. 
 -100%   Bæta einfalt bootstrap þema. 
-
 -100%   Búa til nýtt SQL - tblTúlkur, tblVinna og tblVerkefni. 
+
+#29-6-2021
 -0%     skrá verkefni 
 -0%     tengja túlk í verkefni. Þetta er javascript. 
 -0%     Update user. 
