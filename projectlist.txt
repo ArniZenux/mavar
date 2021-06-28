@@ -42,10 +42,18 @@ Verkefnalist -
 
 #25-6-2021
 -100%   að koma post í virkjar og hægt að skrá nýr túlk inná kerfi 
--0%     búa til verkefni - input form sollis...
 -0%     skrá verkefni 
 -0%     tengja túlk í verkefni. Þetta er javascript. 
 -0%     nota router og búa til fleira router - userRouter, ProjectRouter. 
+
+#26-6-2021
+-100%   búa til verkefni - input form sollis...
+
+#28-6-2021
+-100%   búa til verkefni - input form sollis...
+-0%     búa til nýtt SQL - tblTúlkur, tblVinna og tblVerkefni. 
+-0%     bæta einfalt bootstrap þema. 
+
 
 ath: þarf að breyta router úr app.js og búa til indexrouter.js. app.js er bara server-side en indexrouter.js er middlelayer
 sé um routing fyrir síðuna. Líka þarf að búa til user.js með 

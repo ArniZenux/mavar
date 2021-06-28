@@ -18,6 +18,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false});
 app.set('views', path.join(__dirname,'views'));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, "public")));
+//app.use(express.static(path.join(__dirname, "style")));
 
 /*app.use('/', indexRouter); 
 app.use('/user', userRouter); 
@@ -64,11 +65,13 @@ async function index(req, res){
 }
 
 async function user(req, res){
+    const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Táknmálstúlkur';
     const sql = "SELECT * FROM tblTulkur";
     try{
         db.all(sql, [], (err, rows) => {
             if(err) return console.error(err.message);
-            res.render('users', {title : 'Táknamálstúlkur', model : rows }); 
+            res.render('users', {title: title , subtitle : subtitle, model : rows }); 
         });
     }
     catch(e){
@@ -77,20 +80,22 @@ async function user(req, res){
 }
 
 async function project(req, res){
-    const title = 'Verkefnalisti táknmálstúlka';
+    const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Verkefnalisti táknmálstúlka';
 
     const { videos } = await lesa(); 
     
     if(!videos){
         return next();
     }
-    res.render('projects', { title, videos : videos });
+    res.render('projects', { title, subtitle, videos : videos });
 }
 
 async function addUsers(req, res){
-    const title = 'Bæta nýr táknamálstúlk';
+    const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Bæta nýr táknamálstúlk';
     console.log('Request for home rec');
-    res.render('addusers', { title });
+    res.render('addusers', { title, subtitle });
 }
     
 async function insertUser(req, res){
