@@ -24,16 +24,15 @@ Verkefnalist -
 -100%  change and add app.use. Add for user.js and index.js. It works better. More training and add more knwolegde! 
 
 #16-6-2021
--100% Náði við því að ná í samband við database og birta í users.ejs án þess að nota data_model.js. 
--0%     Create new user
--0%     Update user. 
+-100%   Náði við því að ná í samband við database og birta í users.ejs án þess að nota data_model.js. 
+-100%   Create new user
 
 #21-6-2021
 -100%   Add adduser.ejs
 -100%   login.ejs but ekki virkar ennþá 
 
 #23-6-2021
--0%     Bæta notandi í sqlite - gekk illa. getur ekki lest req.body.KT - veit ekki af hverju 
+-100%     Bæta notandi í sqlite - gekk illa. getur ekki lest req.body.KT - veit ekki af hverju 
 -100%   búa til nýja server_simply.js án þess að nota router. Bara app.post() og app.get() - Gekk illa með req.body.KT
 
 #24-6-2021
@@ -42,29 +41,27 @@ Verkefnalist -
 
 #25-6-2021
 -100%   að koma post í virkjar og hægt að skrá nýr túlk inná kerfi 
-<<<<<<< HEAD
-=======
 -100%   Breyta view í project og bæta nýtt addproject
->>>>>>> 6b6f61b6f0bbbc872d12bece547477275d282dbc
--0%     skrá verkefni 
--0%     tengja túlk í verkefni. Þetta er javascript. 
--0%     nota router og búa til fleira router - userRouter, ProjectRouter. 
--0%     Bæta Nav fyrir home, user, project og new project. 
 
 #26-6-2021
 -100%   búa til verkefni - input form sollis...
 
 #28-6-2021
--100%   búa til verkefni - input form sollis...
--0%     búa til nýtt SQL - tblTúlkur, tblVinna og tblVerkefni. 
--0%     bæta einfalt bootstrap þema. 
+-100%   Búa til verkefni - input form sollis...
+-100%   Bæta Nav fyrir home, user, project og new project. 
+-100%   Bæta einfalt bootstrap þema. 
 
+-100%   Búa til nýtt SQL - tblTúlkur, tblVinna og tblVerkefni. 
+-0%     skrá verkefni 
+-0%     tengja túlk í verkefni. Þetta er javascript. 
+-0%     Update user. 
+-0%     nota router og búa til fleira router - userRouter, ProjectRouter. 
 
-ath: þarf að breyta router úr app.js og búa til indexrouter.js. app.js er bara server-side en indexrouter.js er middlelayer
+ATH: þarf að breyta router úr app.js og búa til indexrouter.js. app.js er bara server-side en indexrouter.js er middlelayer
 sé um routing fyrir síðuna. Líka þarf að búa til user.js með 
 add_user() og update_user() og lika get_list_user()
 
-# later
+# Later
 -0%     admin 
 -0%     user, pass login
 -0%     birta verkefnalist á hverju einni túlks. 

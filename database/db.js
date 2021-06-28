@@ -1,6 +1,7 @@
 const sqlite3 = require('sqlite3').verbose(); 
 var md5 = require('md5')
-const Dbase = "./database/TulkurDATA.db"; 
+//const Dbase = "./database/TulkurDATA.db"; 
+const Dbase = "./database/TulkurSMALL.db"; 
 //const Dbase = "TulkurDATA.db"; 
 
 let db = new sqlite3.Database(Dbase, (err) => {

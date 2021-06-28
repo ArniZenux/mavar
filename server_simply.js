@@ -80,29 +80,18 @@ async function user(req, res){
 }
 
 async function project(req, res){
-<<<<<<< HEAD
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Verkefnalisti táknmálstúlka';
-
-    const { videos } = await lesa(); 
-    
-    if(!videos){
-        return next();
-    }
-    res.render('projects', { title, subtitle, videos : videos });
-=======
-    const title = 'Verkefnalisti táknmálstúlka';
     const sql = "SELECT * FROM tblVerkefni";
     try{
         db.all(sql, [], (err, rows) => {
             if(err) return console.error(err.message); 
-            res.render('projects', {title: title, model : rows});
+            res.render('projects', {title: title, subtitle: subtitle, model : rows});
         });
     }
     catch(e){
         console.error(e.message); 
     }
->>>>>>> 6b6f61b6f0bbbc872d12bece547477275d282dbc
 }
 
 async function addUsers(req, res){
@@ -113,9 +102,10 @@ async function addUsers(req, res){
 }
     
 async function addProjects(req, res){
-    const title = 'Bæta nýtt verkefni'; 
+    const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Bæta nýtt verkefni'; 
     console.log('new project - ');
-    res.render('addprojects', { title });
+    res.render('addprojects', { title : title, subtitle : subtitle });
 }
 
 async function insertUser(req, res){
@@ -159,17 +149,30 @@ app.post('/addusers', urlencodedParser,  (req, res) => {
     }
 });
 
+/*app.post('/addusers:kt, urlencoderParser, (req, res) => { 
+    const sql = "UPDATE... "; 
+    try{
+
+    }
+    catch(e){
+        console.error(e);
+    }
+});
+*/
+
 function notFoundHandler(req, res, next) { // eslint-disable-line
-    const title = 'Síða fannst ekki';
-    res.status(404).render('error', { title });
+    const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Síða fannst ekki';
+    res.status(404).render('error', { title: title,subtitle : subtitle });
     //res.send('Ekk finnst - 404');
 }
         
 function errorHandler(err, req, res, next) { // eslint-disable-line
     console.error(err);
-    const title = 'Villa kom upp';
+    const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Villa kom upp';
     //const subtitle = err.message;
-    res.status(500).render('error', { title });
+    res.status(500).render('error', { title: title, subtitle : subtitle });
     //res.send('Error - 404');
 }
 
