@@ -4,7 +4,7 @@ const express = require('express');
 //var userRouter = require('./routes/user');
 //var projectRouter = require('./routes/project');
 //var adduserRouter = require('./routes/adduser');
-var bodyParser = require('body-parser')
+const bodyParser= require('body-parser')
 const path = require("path");
 const fs = require('fs').promises;
 const app = express(); 
@@ -18,6 +18,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false});
 app.set('views', path.join(__dirname,'views'));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, "public")));
+app.use(bodyParser.urlencoded({ extended: false }));
+ 
 //app.use(express.static(path.join(__dirname, "style")));
 
 /*app.use('/', indexRouter); 
@@ -108,18 +110,40 @@ async function addProjects(req, res){
     res.render('addprojects', { title : title, subtitle : subtitle });
 }
 
-async function insertUser(req, res){
-    const sql = "INSERT INTO tblTulkur (KT, NAFN, SIMI, NETFANG) VALEUS ( ?, ? , ? , ? )";
+async function addusers(req, res){
+    const sql = "INSERT INTO tblTulkur (KT, NAFN, SIMI, NETFANG) VALUES( ? , ? , ? , ? )";
     const tulkur = [req.body.KT, req.body.NAFN, req.body.SIMI, req.body.NETFANG];
+    
     try{
         db.run(sql, tulkur, err => {
-            // if (err) ... 
-            res.redirect('/');
+            if (err){
+                console.error(err.message); 
+            } 
+            else{
+                res.redirect('/');
+                console.log('Tokst að skra');
+            }
         });
     }
     catch(e){
         console.error(e); 
     }
+}
+
+async function userupdate(req, res){
+    const title = 'Mávar - túlkuþjónusta';
+    const sql = "SELECT * FROM tblTulkur WHERE KT = ?"; 
+    const kt = req.params.KT;
+    /*try{
+        db.all(sql, kt, (err, rows) => {
+            if(err) return console.error(err.message); 
+            res.render('userupdate', {title = title, model : rows })
+        }) 
+    }
+    catch(e){
+        console.error(e); 
+    }*/
+    res.render('userupdate', {title : title, kt : kt}); 
 }
 
 app.get('/', catchErrors(index));
@@ -128,8 +152,27 @@ app.get('/project', catchErrors(project));
 app.get('/addusers', catchErrors(addUsers));
 app.get('/addprojects', catchErrors(addProjects)); 
 
-//app.post('/insertUser', catchErrors(insertUser));
-app.post('/addusers', urlencodedParser,  (req, res) => {
+//app.get('/userupdate/:kt',urlencodedParser , catchErrors(userupdate));
+
+app.get('/userUpdate/:kt', (req, res) => {
+    const title = 'Mávar - túlkuþjónusta';
+    const sql = "SELECT * FROM tblTulkur WHERE KT = ?"; 
+    const kt = req.params.KT;
+    /*try{
+        db.all(sql, kt, (err, rows) => {
+            if(err) return console.error(err.message); 
+            res.render('userupdate', {title = title, model : rows })
+        }) 
+    }
+    catch(e){
+        console.error(e); 
+    }*/
+    res.render('userupdate', {title : title, kt : kt}); 
+});
+
+app.post('/addusers', urlencodedParser, catchErrors(addusers));
+
+/*app.post('/addusers', urlencodedParser,  (req, res) => {
     const sql = "INSERT INTO tblTulkur (KT, NAFN, SIMI, NETFANG) VALUES( ? , ? , ? , ? )";
     const tulkur = [req.body.KT, req.body.NAFN, req.body.SIMI, req.body.NETFANG];
     
@@ -148,6 +191,7 @@ app.post('/addusers', urlencodedParser,  (req, res) => {
         console.error(e); 
     }
 });
+*/
 
 /*app.post('/addusers:kt, urlencoderParser, (req, res) => { 
     const sql = "UPDATE... "; 
