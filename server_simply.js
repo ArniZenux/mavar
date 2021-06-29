@@ -21,7 +21,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: false }));
  
 //app.use(express.static(path.join(__dirname, "style")));
-
 /*app.use('/', indexRouter); 
 app.use('/user', userRouter); 
 app.use('/project', projectRouter);
@@ -103,11 +102,22 @@ async function addUsers(req, res){
     res.render('addusers', { title, subtitle });
 }
     
-async function addProjects(req, res){
+async function addprojects(req, res){
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Bæta nýtt verkefni'; 
     console.log('new project - ');
-    res.render('addprojects', { title : title, subtitle : subtitle });
+    const sql = "SELECT * FROM tblTulkur";
+   
+    try{
+        db.all(sql, [], (err, rows) => {
+            if(err) return console.error(err.message);
+            res.render('addprojects', {title: title , subtitle : subtitle, model : rows }); 
+        });
+    }
+    catch(e){
+        console.error(e);
+    }
+    //res.render('addprojects', { title : title, subtitle : subtitle });
 }
 
 async function addusers(req, res){
@@ -130,52 +140,64 @@ async function addusers(req, res){
     }
 }
 
-async function userupdate(req, res){
-    const title = 'Mávar - túlkuþjónusta';
-    const sql = "SELECT * FROM tblTulkur WHERE KT = ?"; 
-    const kt = req.params.KT;
-    /*try{
-        db.all(sql, kt, (err, rows) => {
-            if(err) return console.error(err.message); 
-            res.render('userupdate', {title = title, model : rows })
-        }) 
+async function addProjects(req, res){
+    const sql = "INSERT INTO tblVerkefni (HEITI, STADUR, DAGUR, TIMI_BYRJA, TIMI_ENDIR, VETTVANGUR) VALUES(?,?,?,?,?,?)";
+    const verkefni = [req.body.HEITI, req.body.STADUR, req.body.DAGUR, req.body.TIMI_BYRJA, req.body.TIMI_ENDIR, req.body.VETTVANGUR];
+    
+    try{
+        db.run(sql, verkefni, err => {
+            if (err){
+                console.error(err.message); 
+            } 
+            else{
+                res.redirect('/');
+                console.log('Nýtt verkefni skráð');
+            }
+        });
     }
     catch(e){
         console.error(e); 
-    }*/
-    res.render('userupdate', {title : title, kt : kt}); 
+    }
 }
 
-app.get('/', catchErrors(index));
-app.get('/user', catchErrors(user)); 
-app.get('/project', catchErrors(project));
-app.get('/addusers', catchErrors(addUsers));
-app.get('/addprojects', catchErrors(addProjects)); 
-
-//app.get('/userupdate/:kt',urlencodedParser , catchErrors(userupdate));
-
-app.get('/userUpdate/:kt', (req, res) => {
+async function user_select(req, res){
+    const KT = req.params.KT;
     const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Uppfæra túlk'; 
     const sql = "SELECT * FROM tblTulkur WHERE KT = ?"; 
-    const kt = req.params.KT;
-    /*try{
-        db.all(sql, kt, (err, rows) => {
+    try{
+        db.get(sql, KT, (err, rows) => {
             if(err) return console.error(err.message); 
-            res.render('userupdate', {title = title, model : rows })
+            console.log("KT: ", KT);
+            res.render('userupdate', {subtitle : subtitle, title : title, model : rows })
         }) 
     }
     catch(e){
         console.error(e); 
-    }*/
-    res.render('userupdate', {title : title, kt : kt}); 
-});
+    }
+}
 
-app.post('/addusers', urlencodedParser, catchErrors(addusers));
+async function project_select(req, res){
+    const NR = req.params.NR;
+    const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Uppfæra verkefni'; 
+    const sql = "SELECT * FROM tblVerkefni WHERE NR = ?"; 
+    try{
+        db.get(sql, NR, (err, rows) => {
+            if(err) return console.error(err.message); 
+            console.log("Númer verkefnis: ", NR);
+            res.render('projectupdate', {subtitle : subtitle, title : title, model : rows })
+        }) 
+    }
+    catch(e){
+        console.error(e); 
+    }
+}
 
-/*app.post('/addusers', urlencodedParser,  (req, res) => {
-    const sql = "INSERT INTO tblTulkur (KT, NAFN, SIMI, NETFANG) VALUES( ? , ? , ? , ? )";
-    const tulkur = [req.body.KT, req.body.NAFN, req.body.SIMI, req.body.NETFANG];
-    
+async function userupdate(req, res){
+    const KT = req.params.KT;
+    const tulkur = [req.body.NAFN, req.body.SIMI, req.body.NETFANG, KT];
+    const sql = "UPDATE tblTulkur SET NAFN = ?, SIMI = ? , NETFANG = ? WHERE (KT = ?)";
     try{
         db.run(sql, tulkur, err => {
             if (err){
@@ -183,41 +205,66 @@ app.post('/addusers', urlencodedParser, catchErrors(addusers));
             } 
             else{
                 res.redirect('/');
-                console.log('Tokst að skra');
+                console.log('Notandi uppfærður');
             }
         });
     }
     catch(e){
         console.error(e); 
     }
-});
-*/
+}
 
-/*app.post('/addusers:kt, urlencoderParser, (req, res) => { 
-    const sql = "UPDATE... "; 
+async function projectupdate(req, res){
+    const NR = req.params.NR;
+    const verkefni = [req.body.HEITI, req.body.STADUR, req.body.DAGUR, req.body.TIMI_BYRJA, req.body.TIMI_ENDIR, req.body.VETTVANGUR, NR];
+    const sql = "UPDATE tblVerkefni SET HEITI = ?, STADUR = ?, DAGUR = ?, TIMI_BYRJA = ?, TIMI_ENDIR = ?, VETTVANGUR = ? WHERE (NR = ?)";
     try{
-
+        db.run(sql, verkefni, err => {
+            if (err){
+                console.error(err.message); 
+            } 
+            else{
+                res.redirect('/');
+                console.log('Verkefni uppfærð');
+            }
+        });
     }
     catch(e){
-        console.error(e);
+        console.error(e); 
     }
-});
-*/
+}
+
+/**********/
+//  GET    /
+/**********/
+app.get('/', catchErrors(index));
+app.get('/user', catchErrors(user)); 
+app.get('/project', catchErrors(project));
+app.get('/addusers', catchErrors(addUsers));
+app.get('/addprojects', catchErrors(addprojects)); 
+app.get('/user_select/:KT', catchErrors(user_select));
+app.get('/project_select/:NR', catchErrors(project_select));
+
+
+/**********/
+//  POST   /
+/**********/
+app.post('/addusers', urlencodedParser, catchErrors(addusers));
+app.post('/addprojects', urlencodedParser, catchErrors(addProjects));
+app.post('/userupdate/:KT', urlencodedParser, catchErrors(userupdate));
+app.post('/projectupdate/:NR', urlencodedParser, catchErrors(projectupdate));
 
 function notFoundHandler(req, res, next) { // eslint-disable-line
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Síða fannst ekki';
     res.status(404).render('error', { title: title,subtitle : subtitle });
-    //res.send('Ekk finnst - 404');
 }
         
 function errorHandler(err, req, res, next) { // eslint-disable-line
     console.error(err);
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Villa kom upp';
-    //const subtitle = err.message;
     res.status(500).render('error', { title: title, subtitle : subtitle });
-    //res.send('Error - 404');
 }
 
 app.use(notFoundHandler);

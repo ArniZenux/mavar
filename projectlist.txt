@@ -53,9 +53,13 @@ Verkefnalist -
 -100%   Búa til nýtt SQL - tblTúlkur, tblVinna og tblVerkefni. 
 
 #29-6-2021
--0%     skrá verkefni 
--0%     tengja túlk í verkefni. Þetta er javascript. 
--0%     Update user. 
+-100%   Skrá verkefni 
+-100%   Update user. 
+-100%   Bæta túlk input í project.ejs
+
+#30-6-2021
+-0%     Skrá túlk og verkefni. tblVinna og tblVerkefni.
+-0%     Bæta check ef vantar eða rangt input. 
 -0%     nota router og búa til fleira router - userRouter, ProjectRouter. 
 
 ATH: þarf að breyta router úr app.js og búa til indexrouter.js. app.js er bara server-side en indexrouter.js er middlelayer

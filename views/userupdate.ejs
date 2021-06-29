@@ -1,30 +1,35 @@
 <%- include('header') -%>
 
+<br>
+
 <h2 class="header__title"><%= subtitle %></h2>
  
 <form method="post" action="/userupdate/<%= model.KT %>" >
 
-    <div class="field">
-      <label for="nationalId">Kennitala * </label>
-      <input type="text" name="KT" value="Kennitala" >
+    <div class="form-group">
+      <label for="nationalId">Kennitala</label>
+      <input type="text" class="form-control" name="KT" placeholder="<%= model.KT %>" >
     </div>  
     
-    <div class="field">
-      <label for="name">Nafn * </label>
-      <input type="text" name="NAFN" value="Túlks nafn" >
+    <div class="form-group">
+      <label for="name">Nafn</label>
+      <input type="text" class="form-control" name="NAFN" value="<%= model.NAFN %>" placeholder="<%= model.NAFN %>" >
     </div>
       
-    <div class="field">
-      <label for="nationalId">Símanúmer * </label>
-      <input type="text" name="SIMI" value="Símanúmer" >
+    <div class="form-group">
+      <label for="nationalId">Símanúmer</label>
+      <input type="text" class="form-control" name="SIMI" value="<%= model.SIMI %>" placeholder="<%= model.SIMI %>" >
     </div>
 
-    <div class="field">
-      <label for="nationalId">Netfang * </label>
-      <input type="text" name="NETFANG" value="Tölvupósur" >
+    <div class="form-group">
+      <label for="nationalId">Netfang</label>
+      <input type="email" class="form-control" name="NETFANG" value="<%= model.NETFANG %>" placeholder="<%= model.NETFANG %>" >
     </div>
     
-    <button class="btn btn-sm btn-success">Vista</button>
-  </form>
+    <button class="btn btn-sm btn-warning">Uppfæra</button>
+
+</form>
+
+<br>
 
 <%- include('footer') -%> 

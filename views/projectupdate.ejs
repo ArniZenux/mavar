@@ -1,0 +1,43 @@
+<%- include('header') -%>
+
+<br>
+
+<h2 class="header__title"><%= subtitle %></h2>
+
+<form method="post" action="/projectupdate/<%= model.NR %>">
+
+    <div class="form-group">
+      <label for="nationalId">Heiti</label>
+      <input type="text" class="form-control" name="HEITI" value="<%= model.HEITI %>" >
+    </div>  
+    
+    <div class="form-group">
+      <label for="name">Staður</label>
+      <input type="text" class="form-control" name="STADUR" value="<%= model.STADUR %>" >
+    </div>
+      
+    <div class="form-group">
+      <label for="nationalId">Dagur</label>
+      <input type="text" class="form-control" name="DAGUR" value="<%= model.DAGUR %>" >
+    </div>
+
+    <div class="form-group">
+      <label for="nationalId">Byrja</label>
+      <input type="text" class="form-control" name="TIMI_BYRJA" value="<%= model.TIMI_BYRJA %>" >
+    </div>
+    
+    <div class="form-group">
+      <label for="nationalId">Endir</label>
+      <input type="text" class="form-control" name="TIMI_ENDIR" value="<%= model.TIMI_ENDIR %>" >
+    </div>
+
+    <div class="form-group">
+      <label for="nationalId">Vettvangur</label>
+      <input type="text" class="form-control" name="VETTVANGUR" value="<%= model.VETTVANGUR %>" >
+    </div>
+    <button class="btn btn-sm btn-success">Uppfæra</button>
+  </form>
+
+<br>
+
+<%- include('footer') -%> 

@@ -1,36 +1,35 @@
 <%- include('header') -%>
 
-<!--
-<a href="/">Home</span></a>
-<a href="user">User</a>
-<a href="project">project</a>
--->
+<br>
 
 <h2 class="header__title"><%= subtitle %></h2>
  
 <form method="post" action="/addusers">
 
-    <div class="field">
-      <label for="nationalId">Kennitala * </label>
-      <input type="text" name="KT" value="Kennitala" >
+    <div class="form-group">
+      <label for="formGroupExampleInput">Kennitala</label>
+      <input type="text" class="form-control" name="KT" placeholder="Kennitala" >
     </div>  
     
-    <div class="field">
-      <label for="name">Nafn * </label>
-      <input type="text" name="NAFN" value="Túlks nafn" >
+    <div class="form-group">
+      <label for="formGroupExampleInput">Nafn</label>
+      <input type="text" class="form-control" name="NAFN" placeholder="Nafn" >
     </div>
       
-    <div class="field">
-      <label for="nationalId">Símanúmer * </label>
-      <input type="text" name="SIMI" value="Símanúmer" >
+    <div class="form-group">
+      <label for="formGroupExampleInput">Símanúmer</label>
+      <input type="text" class="form-control" name="SIMI" placeholder="Símanúmer" >
+    </div>
+  
+    <div class="form-group">
+      <label for="inputEmail4">Netfang</label>
+      <input type="email" class="form-control" name="NETFANG" placeholder="Tölvupósur" >
     </div>
 
-    <div class="field">
-      <label for="nationalId">Netfang * </label>
-      <input type="text" name="NETFANG" value="Tölvupósur" >
-    </div>
-    
     <button class="btn btn-sm btn-success">Vista</button>
-  </form>
+
+</form>
+
+<br>
 
 <%- include('footer') -%> 
