@@ -61,8 +61,8 @@ Verkefnalist -
 -100%   Skrá túlk og verkefni. tblVinna og tblVerkefni.
 -100%   printa lista af verkefni ásamt túlki. 
 -100%   Index - main - Birta túlk ásamt verkefni án uppfæra/ bæta nýtt. 
--0%     Uppfæra verkefni.
--0%     Skipta túlk. 
+-100%   Uppfæra verkefni.
+-50%    Skipta túlk. 
 -0%     Bæta check ef vantar eða rangt input. 
 -0%     nota router og búa til fleira router - userRouter, ProjectRouter. 
 

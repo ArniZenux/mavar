@@ -5,6 +5,8 @@ const fs = require('fs').promises;
 const app = express(); 
 var db = require('./database/db.js');
 const { json } = require('body-parser');
+const { get } = require('http');
+const { SSL_OP_NO_QUERY_MTU } = require('constants');
 
 const hostname = "127.0.0.1";
 const port = 3000; 
@@ -218,6 +220,36 @@ async function project_select(req, res){
 /***********/
 // Uppfæra //
 /***********/
+async function tulkur_select(req, res){
+    const NR = req.params.NR;
+    const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Skipta túlk'; 
+    const sql_tulkaverkefni = "SELECT * FROM tblTulkur, tblVinna, tblVerkefni WHERE tblTulkur.KT=tblVinna.KT AND tblVinna.NR=tblVerkefni.NR AND tblVerkefni.NR = ?"; 
+    const sql_tulkur = "SELECT * FROM tblTulkur"; 
+    const rows_project = '';
+    const rows_tulkur = '';
+    try{
+        db.get(sql_tulkaverkefni, NR, (err, rows_project) => {
+            if(err) return console.error(err.message); 
+            console.log("Númer verkefnis: ", NR);
+            console.log(rows_project.HEITI + ' og ' + rows_project.NAFN); 
+            rows_project = rows_project; 
+            //res.render('tulkurupdate', {subtitle : subtitle, title : title, model : rows })
+        });
+
+        db.get(sql_tulkur,[], (err, rows) => {
+            console.log(rows.KT + ' og nafn : ' + rows.NAFN);
+            res.render('tulkurupdate', {subtitle : subtitle, title : title, rows_project : rows_project, rows_tulkur : rows_tulkur })
+        }); 
+    }
+    catch(e){
+        console.error(e); 
+    }
+}
+
+/***********/
+// Uppfæra //
+/***********/
 async function userupdate(req, res){
     const KT = req.params.KT;
     const tulkur = [req.body.NAFN, req.body.SIMI, req.body.NETFANG, KT];
@@ -261,6 +293,31 @@ async function projectupdate(req, res){
     }
 }
 
+/***********/
+// Uppfæra //
+/***********/
+async function tulkurupdate(req, res){
+    const NR = req.params.NR;
+    const nafn = [req.body.NAFN];
+    const sql = "UPDATE tblVinna SET KT = ? WHERE (NR = ?)";
+    try{
+        /*db.run(sql, verkefni, err => {
+            if (err){
+                console.error(err.message); 
+            } 
+            else{
+                res.redirect('/');
+                console.log('Tulkur skipta');
+            }
+        });*/
+        console.log("túlkur skipta tókst!");
+
+    }
+    catch(e){
+        console.error(e); 
+    }
+}
+
 /**********/
 //  GET    /
 /**********/
@@ -271,7 +328,7 @@ app.get('/addusers', catchErrors(addUsers));
 app.get('/addprojects', catchErrors(addprojects)); 
 app.get('/user_select/:KT', catchErrors(user_select));
 app.get('/project_select/:NR', catchErrors(project_select));
-
+app.get('/tulkur_select/:NR', catchErrors(tulkur_select));
 
 /**********/
 //  POST   /
@@ -280,7 +337,7 @@ app.post('/addusers', urlencodedParser, catchErrors(addusers));
 app.post('/addprojects', urlencodedParser, catchErrors(addProjects));
 app.post('/userupdate/:KT', urlencodedParser, catchErrors(userupdate));
 app.post('/projectupdate/:NR', urlencodedParser, catchErrors(projectupdate));
-
+app.post('/tulkurupdate/:NR', urlencodedParser, catchErrors(tulkurupdate));
 
 
 /*****************/

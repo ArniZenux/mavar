@@ -7,10 +7,10 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th>Kennitala</th>
       <th>Nafn</th>
       <th>Sími</th>
       <th>Netfang</th>
+      
       <th class="d-print-none">
         <a class="btn btn-sm btn-success" href="addusers">Bæta nýr túlk</a>
       </th>
@@ -19,13 +19,12 @@
   <tbody>
     <% for(let user of model) { %>
      <tr>
-       <td><%= user.KT %></td>
        <td><%= user.NAFN %></td>
        <td><%= user.SIMI %></td>
        <td><%= user.NETFANG %></td>
        <td class="d-print-none">
          <a class="btn btn-sm btn-warning" href="user_select/<%= user.KT %>">Uppfæra</a>
-         <a class="btn btn-sm btn-danger" href="">Eyða</a>
+         
         </td>
      </tr> 
      <% } %> 

@@ -1,0 +1,30 @@
+<%- include('header') -%>
+
+<br>
+
+<h2 class="header__title"><%= subtitle %></h2>
+
+<form method="post" action="/tulkurupdate/<%= rows_project.NR %>">
+    
+    <div class="form-group">
+      <label for="nationalId">Nafn túlka er skráður í túlkaverkefni</label>
+      <input type="text" class="form-control" name="NAFN" placeholder="<%= rows_project.NAFN %>" >
+    </div>
+   
+    <div class="form-group">
+      <label for="">Táknmálstúlkur</label>
+      <select class="form-control" id="NAFN" name="NAFN">
+        <% for(let user of rows_tulkur) { %>
+        <option name="NAFN"><%= user.NAFN %></option>
+        <% } %>
+      </select>
+    </div>
+
+
+    <button class="btn btn-sm btn-success">Skipta túlk</button> 
+  
+  </form>
+
+<br>
+
+<%- include('footer') -%> 
