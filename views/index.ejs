@@ -1,9 +1,36 @@
 <%- include('header') -%>
 
-<!--
-<a href="/">Home</span></a>
-<a href="user">User</a>
-<a href="project">project</a>
--->
+<br>
+
+<h2 class="header__title"><%= subtitle %></h2>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Heiti</th>
+      <th>Staður</th>
+      <th>Dagur</th>
+      <th>Byrja</th>
+      <th>Endir</th>
+      <th>Vettvangur</th>
+      <th>Túlkur</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for(let project of model) { %>
+    <tr>
+      <td><%= project.HEITI %></td>
+      <td><%= project.STADUR %></td>
+      <td><%= project.DAGUR %></td>
+      <td><%= project.TIMI_BYRJA %></td>
+      <td><%= project.TIMI_ENDIR %></td>
+      <td><%= project.VETTVANGUR %></td>
+      <td><%= project.NAFN %></td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<br>
 
 <%- include('footer') -%> 

@@ -24,9 +24,20 @@ function catchErrors(fn){
 // Main Home  //
 /**************/
 async function index(req, res){
-    const title = 'Mávar - túlkuþjónusta';
     console.log('Main home - index');
-    res.render('index', { title });
+    const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Verkefnalisti táknmálstúlka';
+    const sql = "SELECT * FROM tblTulkur, tblVinna, tblVerkefni WHERE tblTulkur.KT=tblVinna.KT AND tblVinna.NR=tblVerkefni.NR";
+    try{
+        db.all(sql, [], (err, rows) => {
+            if(err) return console.error(err.message); 
+            res.render('index', {title: title, subtitle: subtitle, model : rows});
+        });
+    }
+    catch(e){
+        console.error(e.message); 
+    }
+    //res.render('index', { title });
 }
 
 /**********/
@@ -137,7 +148,7 @@ async function addProjects(req, res){
                 console.log('Tókst að ná kennitala túlka');
                 const kt = rows.KT;  
                 console.log(kt); 
-                
+
                 db.run(sql_vinna, kt, err => {
                     if(err) { 
                         console.error(err.message); 
@@ -191,7 +202,7 @@ async function project_select(req, res){
     const NR = req.params.NR;
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Uppfæra verkefni'; 
-    const sql = "SELECT * FROM tblVerkefni WHERE NR = ?"; 
+    const sql = "SELECT * FROM tblTulkur, tblVinna, tblVerkefni WHERE tblTulkur.KT=tblVinna.KT AND tblVinna.NR=tblVerkefni.NR AND tblVerkefni.NR = ?"; 
     try{
         db.get(sql, NR, (err, rows) => {
             if(err) return console.error(err.message); 
@@ -269,6 +280,7 @@ app.post('/addusers', urlencodedParser, catchErrors(addusers));
 app.post('/addprojects', urlencodedParser, catchErrors(addProjects));
 app.post('/userupdate/:KT', urlencodedParser, catchErrors(userupdate));
 app.post('/projectupdate/:NR', urlencodedParser, catchErrors(projectupdate));
+
 
 
 /*****************/

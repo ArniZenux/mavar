@@ -60,7 +60,7 @@ Verkefnalist -
 #30-6-2021
 -100%   Skrá túlk og verkefni. tblVinna og tblVerkefni.
 -100%   printa lista af verkefni ásamt túlki. 
--0%     Index - main - Birta túlk ásamt verkefni án uppfæra/ bæta nýtt. 
+-100%   Index - main - Birta túlk ásamt verkefni án uppfæra/ bæta nýtt. 
 -0%     uppfæra verkefni.
 -0%     Bæta check ef vantar eða rangt input. 
 -0%     nota router og búa til fleira router - userRouter, ProjectRouter. 
