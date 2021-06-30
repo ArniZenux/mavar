@@ -1,14 +1,10 @@
 const express = require('express');
-//var routes = require('./routes/route.js');
-//var indexRouter = require('./routes/index');
-//var userRouter = require('./routes/user');
-//var projectRouter = require('./routes/project');
-//var adduserRouter = require('./routes/adduser');
 const bodyParser= require('body-parser')
 const path = require("path");
 const fs = require('fs').promises;
 const app = express(); 
 var db = require('./database/db.js');
+const { json } = require('body-parser');
 
 const hostname = "127.0.0.1";
 const port = 3000; 
@@ -20,51 +16,22 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: false }));
  
-//app.use(express.static(path.join(__dirname, "style")));
-/*app.use('/', indexRouter); 
-app.use('/user', userRouter); 
-app.use('/project', projectRouter);
-app.use('/adduser', adduserRouter);
-
-app.get('/', (req, res) => {
-    res.send('Hello');
-});
-*/
-
 function catchErrors(fn){
     return (req, res, next) => fn(req, res, next).catch(next); 
 }
 
-/**
- * Les inn lista af list úr JSON skrá.
- * @returns {promise} Promise sem inniheldur gögn úr JSON skrá
- */
- async function lesa(){
-    let openFile_ = null; 
-    try {
-        //openFile_ = await fs.open('./routes/tulkar.json', 'r');   
-        openFile_ = await fs.open('./routes/videos.json', 'r');   
-        var readFile_ = await fs.readFile(openFile_);  
-        var student = JSON.parse(readFile_); 
-        //console.log(student); 
-        return student; 
-    }    
-    catch(e){
-        throw new Error('Can´t read a JSON file!');
-    }
-    finally{
-        if(openFile_){
-            await openFile_.close(); 
-        }
-    }
-}
-
+/**************/
+// Main Home  //
+/**************/
 async function index(req, res){
     const title = 'Mávar - túlkuþjónusta';
     console.log('Main home - index');
     res.render('index', { title });
 }
 
+/**********/
+// Birta  //
+/**********/
 async function user(req, res){
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Táknmálstúlkur';
@@ -80,10 +47,13 @@ async function user(req, res){
     }
 }
 
+/**********/
+// Birta  //
+/**********/
 async function project(req, res){
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Verkefnalisti táknmálstúlka';
-    const sql = "SELECT * FROM tblVerkefni";
+    const sql = "SELECT * FROM tblTulkur, tblVinna, tblVerkefni WHERE tblTulkur.KT=tblVinna.KT AND tblVinna.NR=tblVerkefni.NR";
     try{
         db.all(sql, [], (err, rows) => {
             if(err) return console.error(err.message); 
@@ -95,17 +65,24 @@ async function project(req, res){
     }
 }
 
+/**********/
+// Birta  //
+/**********/
 async function addUsers(req, res){
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Bæta nýr táknamálstúlk';
     console.log('Request for home rec');
     res.render('addusers', { title, subtitle });
 }
-    
+   
+/**********/
+// Birta  //
+/**********/
 async function addprojects(req, res){
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Bæta nýtt verkefni'; 
     console.log('new project - ');
+    //Get Túlkur í listbox. 
     const sql = "SELECT * FROM tblTulkur";
    
     try{
@@ -117,9 +94,11 @@ async function addprojects(req, res){
     catch(e){
         console.error(e);
     }
-    //res.render('addprojects', { title : title, subtitle : subtitle });
 }
 
+/************/
+// Innsetja //
+/************/
 async function addusers(req, res){
     const sql = "INSERT INTO tblTulkur (KT, NAFN, SIMI, NETFANG) VALUES( ? , ? , ? , ? )";
     const tulkur = [req.body.KT, req.body.NAFN, req.body.SIMI, req.body.NETFANG];
@@ -140,26 +119,54 @@ async function addusers(req, res){
     }
 }
 
+/************/
+// Innsetja //
+/************/
 async function addProjects(req, res){
-    const sql = "INSERT INTO tblVerkefni (HEITI, STADUR, DAGUR, TIMI_BYRJA, TIMI_ENDIR, VETTVANGUR) VALUES(?,?,?,?,?,?)";
+    const sql_verkefni = "INSERT INTO tblVerkefni (HEITI, STADUR, DAGUR, TIMI_BYRJA, TIMI_ENDIR, VETTVANGUR) VALUES(?,?,?,?,?,?)";
+    const sql_vinna = "INSERT INTO tblVinna(KT) VALUES( ? )";
     const verkefni = [req.body.HEITI, req.body.STADUR, req.body.DAGUR, req.body.TIMI_BYRJA, req.body.TIMI_ENDIR, req.body.VETTVANGUR];
-    
+    const nafn = [req.body.NAFN];
+    const sql_select_kt = "SELECT KT FROM tblTulkur WHERE NAFN = ?";
     try{
-        db.run(sql, verkefni, err => {
+        db.get(sql_select_kt, nafn, (err, rows)  => {
             if (err){
                 console.error(err.message); 
             } 
             else{
-                res.redirect('/');
-                console.log('Nýtt verkefni skráð');
-            }
-        });
+                console.log('Tókst að ná kennitala túlka');
+                const kt = rows.KT;  
+                console.log(kt); 
+                
+                db.run(sql_vinna, kt, err => {
+                    if(err) { 
+                        console.error(err.message); 
+                    }
+                    else{
+                        console.log('tblVinna skráð');
+                    }
+                });
+
+                db.run(sql_verkefni, verkefni, err => {
+                    if(err) { 
+                        console.error(err.message); 
+                    }
+                    else{
+                        console.log('tblVerkefni skráð');
+                        res.redirect('/');
+                    }
+                });       
+            }        
+        }); 
     }
     catch(e){
         console.error(e); 
     }
 }
 
+/***********/
+// Uppfæra //
+/***********/
 async function user_select(req, res){
     const KT = req.params.KT;
     const title = 'Mávar - túlkuþjónusta';
@@ -177,6 +184,9 @@ async function user_select(req, res){
     }
 }
 
+/***********/
+// Uppfæra //
+/***********/
 async function project_select(req, res){
     const NR = req.params.NR;
     const title = 'Mávar - túlkuþjónusta';
@@ -194,6 +204,9 @@ async function project_select(req, res){
     }
 }
 
+/***********/
+// Uppfæra //
+/***********/
 async function userupdate(req, res){
     const KT = req.params.KT;
     const tulkur = [req.body.NAFN, req.body.SIMI, req.body.NETFANG, KT];
@@ -214,6 +227,9 @@ async function userupdate(req, res){
     }
 }
 
+/***********/
+// Uppfæra //
+/***********/
 async function projectupdate(req, res){
     const NR = req.params.NR;
     const verkefni = [req.body.HEITI, req.body.STADUR, req.body.DAGUR, req.body.TIMI_BYRJA, req.body.TIMI_ENDIR, req.body.VETTVANGUR, NR];
@@ -254,6 +270,10 @@ app.post('/addprojects', urlencodedParser, catchErrors(addProjects));
 app.post('/userupdate/:KT', urlencodedParser, catchErrors(userupdate));
 app.post('/projectupdate/:NR', urlencodedParser, catchErrors(projectupdate));
 
+
+/*****************/
+//  Handler error /
+/*****************/
 function notFoundHandler(req, res, next) { // eslint-disable-line
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Síða fannst ekki';

@@ -39,9 +39,9 @@
    
     <div class="form-group">
       <label for="exampleFormControlSelect1">Táknmálstúlkur</label>
-      <select class="form-control" id="exampleFormControlSelect1">
+      <select class="form-control" id="NAFN" name="NAFN">
         <% for(let user of model) { %>
-        <option><%= user.NAFN %></option>
+        <option name="NAFN"><%= user.NAFN %></option>
         <% } %>
       </select>
     </div>
