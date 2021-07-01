@@ -62,9 +62,10 @@ Verkefnalist -
 -100%   printa lista af verkefni ásamt túlki. 
 -100%   Index - main - Birta túlk ásamt verkefni án uppfæra/ bæta nýtt. 
 -100%   Uppfæra verkefni.
--50%    Skipta túlk. 
+-100%   Skipta túlk. 
 -0%     Bæta check ef vantar eða rangt input. 
 -0%     nota router og búa til fleira router - userRouter, ProjectRouter. 
+-0%     birta eingöngu túlka með verkefnalista. 
 
 ATH: þarf að breyta router úr app.js og búa til indexrouter.js. app.js er bara server-side en indexrouter.js er middlelayer
 sé um routing fyrir síðuna. Líka þarf að búa til user.js með 

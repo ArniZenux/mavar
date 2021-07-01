@@ -4,22 +4,21 @@
 
 <h2 class="header__title"><%= subtitle %></h2>
 
-<form method="post" action="/tulkurupdate/<%= rows_project.NR %>">
+<form method="post" action="/tulkurupdate/<%= one_tulkur.NR %>">
     
     <div class="form-group">
       <label for="nationalId">Nafn túlka er skráður í túlkaverkefni</label>
-      <input type="text" class="form-control" name="NAFN" placeholder="<%= rows_project.NAFN %>" >
+      <input type="text" class="form-control" name="" placeholder="<%= one_tulkur.NAFN %>" >
     </div>
    
     <div class="form-group">
       <label for="">Táknmálstúlkur</label>
       <select class="form-control" id="NAFN" name="NAFN">
-        <% for(let user of rows_tulkur) { %>
-        <option name="NAFN"><%= user.NAFN %></option>
+        <% for(let user of all_tulkur) { %>
+          <option name="NAFN"><%= user.NAFN %></option>
         <% } %>
       </select>
     </div>
-
 
     <button class="btn btn-sm btn-success">Skipta túlk</button> 
   
