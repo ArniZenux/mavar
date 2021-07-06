@@ -65,7 +65,9 @@ Verkefnalist -
 
 #1-7-2021
 -100%   Skipta túlk. 
--0%     birta eingöngu túlka með verkefnalista. 
+-100%   Css og navbar.
+-100%   Downdrop - túlkur  
+-100%   Velja ein túlk og birta listaverkefni túlka.  
 -0%     Bæta check ef vantar eða rangt input. 
 -0%     nota router og búa til fleira router - userRouter, ProjectRouter. 
 

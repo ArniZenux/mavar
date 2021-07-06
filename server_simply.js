@@ -62,6 +62,43 @@ async function user(req, res){
 /**********/
 // Birta  //
 /**********/
+async function userlisti(req, res){
+    const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Táknmálstúlkur';
+    const sql = "SELECT * FROM tblTulkur";
+    try{
+        await db.all(sql, [], (err, rows) => {
+                if(err) return console.error(err.message);
+                res.render('users_listi', {title: title , subtitle : subtitle, model : rows }); 
+        });
+    }
+    catch(e){
+        console.error(e);
+    }
+}
+
+/**********/
+// Birta  //
+/**********/
+async function user_pickup(req, res){
+    const KT = req.params.KT;
+    const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Táknmálstúlkur';
+    const sql = "SELECT * FROM tblTulkur, tblVinna, tblVerkefni WHERE tblTulkur.KT=tblVinna.KT AND tblVinna.NR=tblVerkefni.NR AND tblTulkur.KT = ?";
+    try{
+        await db.all(sql, KT, (err, rows) => {
+                if(err) return console.error(err.message);
+                res.render('tulkaproject', {title: title , subtitle : subtitle, model : rows }); 
+        });
+    }
+    catch(e){
+        console.error(e);
+    }
+}
+
+/**********/
+// Birta  //
+/**********/
 async function project(req, res){
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Verkefnalisti táknmálstúlka';
@@ -336,11 +373,13 @@ async function tulkurupdate(req, res){
 //  GET    /
 /**********/
 app.get('/', catchErrors(index));
-app.get('/user', catchErrors(user)); 
+app.get('/user', catchErrors(user));
+app.get('/userlisti', catchErrors(userlisti)); 
 app.get('/project', catchErrors(project));
 app.get('/addusers', catchErrors(addUsers));
 app.get('/addprojects', catchErrors(addprojects)); 
 app.get('/user_select/:KT', catchErrors(user_select));
+app.get('/user_pickup/:KT', catchErrors(user_pickup));
 app.get('/project_select/:NR', catchErrors(project_select));
 app.get('/tulkur_select/:NR', catchErrors(tulkur_select));
 
