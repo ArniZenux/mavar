@@ -67,8 +67,18 @@ Verkefnalist -
 -100%   Skipta túlk. 
 -100%   Css og navbar.
 -100%   Downdrop - túlkur  
--100%   Velja ein túlk og birta listaverkefni túlka.  
+-100%   Velja ein túlk og birta listaverkefni túlka.
+
+#7-7-2012
+-0%     Check ef kennitala sé eins   
 -0%     Bæta check ef vantar eða rangt input. 
+-0%     bæta við admin í sql. 
+-0%     admin 
+-0%     user, pass login
+
+-0%     Búa til Calender 
+-0%     Láta verkefni túlka birta í calender.
+
 -0%     nota router og búa til fleira router - userRouter, ProjectRouter. 
 
 ATH: þarf að breyta router úr app.js og búa til indexrouter.js. app.js er bara server-side en indexrouter.js er middlelayer
@@ -76,9 +86,6 @@ sé um routing fyrir síðuna. Líka þarf að búa til user.js með
 add_user() og update_user() og lika get_list_user()
 
 # Later
--0%     admin 
--0%     user, pass login
--0%     birta verkefnalist á hverju einni túlks. 
 
 Plan in project in future. 
 - CSS 
