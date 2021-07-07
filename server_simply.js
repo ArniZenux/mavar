@@ -6,6 +6,7 @@ const app = express();
 var db = require('./database/db.js');
 const { json } = require('body-parser');
 const { get } = require('http');
+const { body, validationResult } = require('express-validator');
 const { SSL_OP_NO_QUERY_MTU } = require('constants');
 
 const hostname = "127.0.0.1";
@@ -21,6 +22,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 function catchErrors(fn){
     return (req, res, next) => fn(req, res, next).catch(next); 
 }
+
+function isInvalid(field, errors = [] ){
+    return Boolean(errors.find((i) => i && i.param === field ));
+}
+
+app.locals.isInvalid = isInvalid; 
+
+const validationMiddleware = [
+    body('KT')
+        .isLength( { min : 1 })
+        .withMessage('Ekki tóma kennitala')
+];
 
 /**************/
 // Main Home  //
@@ -118,10 +131,11 @@ async function project(req, res){
 // Birta  //
 /**********/
 async function addUsers(req, res){
+    const errors = []; 
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Bæta nýr táknamálstúlk';
     console.log('Request for home rec');
-    res.render('addusers', { title, subtitle });
+    res.render('addusers', {errors, title, subtitle });
 }
    
 /**********/
@@ -151,15 +165,22 @@ async function addprojects(req, res){
 async function addusers(req, res){
     const sql = "INSERT INTO tblTulkur (KT, NAFN, SIMI, NETFANG) VALUES( ? , ? , ? , ? )";
     const tulkur = [req.body.KT, req.body.NAFN, req.body.SIMI, req.body.NETFANG];
-    
+    let success = true; 
+
     try{
         await db.run(sql, tulkur, err => {
                 if (err){
                     console.error(err.message); 
+                    
                 } 
                 else{
-                    res.redirect('/');
-                    console.log('Tokst að skra');
+                    if (success === true){
+                        res.redirect('/');
+                        console.log('Tokst að skra');
+                       }
+                    else{
+                        res.render('error', { title: 'Gat ekki skráð', subtitle : 'Eitthvað er drasl'} ); 
+                    }
                 }
         });
     }
@@ -370,6 +391,29 @@ async function tulkurupdate(req, res){
 }
 
 /**********/
+//  CHECK  /
+/**********/
+async function validationCheck(req, res, next) {
+    const {
+      KT
+    } = req.body;
+  
+    /*const formData = {
+      name, nationalId, comment, anonymous,
+    };*/
+
+    //const registrations = await list();
+  
+    const validation = validationResult(req);
+  
+    if (!validation.isEmpty()) {
+      return res.render('/addusers', { errors: validation.errors });
+    }
+  
+    return next();
+  }
+
+/**********/
 //  GET    /
 /**********/
 app.get('/', catchErrors(index));
@@ -386,7 +430,7 @@ app.get('/tulkur_select/:NR', catchErrors(tulkur_select));
 /**********/
 //  POST   /
 /**********/
-app.post('/addusers', urlencodedParser, catchErrors(addusers));
+app.post('/addusers', validationMiddleware, catchErrors(validationCheck), urlencodedParser, catchErrors(addusers));
 app.post('/addprojects', urlencodedParser, catchErrors(addProjects));
 app.post('/userupdate/:KT', urlencodedParser, catchErrors(userupdate));
 app.post('/projectupdate/:NR', urlencodedParser, catchErrors(projectupdate));

@@ -1,5 +1,9 @@
 Verkefnalist - 
 
+###############
+# version 0.1 # 
+###############
+
 #8-6-2021
 -100%   laga git og allt er komið. 
 -100%   virkjar json
@@ -78,7 +82,6 @@ Verkefnalist -
 
 -0%     Búa til Calender 
 -0%     Láta verkefni túlka birta í calender.
-
 -0%     nota router og búa til fleira router - userRouter, ProjectRouter. 
 
 ATH: þarf að breyta router úr app.js og búa til indexrouter.js. app.js er bara server-side en indexrouter.js er middlelayer
@@ -97,4 +100,13 @@ Plan in project in future.
 - time schema 
 - add custumor - viðskiptavinur
 - add fyrirtæki
+
+###############
+# version 0.2 #
+###############
+- að geta sett verkefni í tímaröð og ráða - nýjasta efst? eða nýjast neðst- báða möguleika. Röðin núna er óskipulögð
+- að geta leitað í grunninum, leitað að túlki, leitað að stað (til dæmis Marel) leita að döff og fleira 
+- að geta skráð tvo túlka í verkefni eða fleiri, stundum eru til dæmis 5-6 túlkar í sama verkefni
+- að geta skráð fleiri en 1 döff, eða sett Félagar í félagi heyrnarlausra - það er stundum gert fyrir hóp af döff
+- það þarf að athuga með persónuvernd, það eru strangar reglur um kennitölur og persónuupplýsingar
 

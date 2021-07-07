@@ -6,8 +6,8 @@
  
 <form method="post" action="/addusers">
 
-    <div class="form-group">
-      <label for="formGroupExampleInput">Kennitala</label>
+    <div class="field<%= locals.isInvalid('KT', errors) ?  ' field--invalid' : '' %>">
+      <label for="KT">Kennitala</label>
       <input type="text" class="form-control" name="KT" placeholder="Kennitala" >
     </div>  
     
@@ -26,6 +26,17 @@
       <input type="email" class="form-control" name="NETFANG" placeholder="Tölvupósur" >
     </div>
     
+    <br>
+
+    <% if (errors.length > 0) { %>
+      <h2 class="errors__title">Villur við undirskrift:</h2>
+      <ul class="errors">
+        <% errors.forEach((error) => { %>
+          <li class="error"><label for="<%= error.param %>"><%= error.msg %></label></li>
+        <% }); %>
+      </ul>
+    <% } %>
+
     <br>
 
     <button class="btn btn-sm btn-success">Vista</button>
