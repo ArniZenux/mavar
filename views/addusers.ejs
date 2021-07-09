@@ -6,25 +6,25 @@
  
 <form method="post" action="/addusers">
 
-    <div class="field<%= locals.isInvalid('KT', errors) ?  ' field--invalid' : '' %>">
-      <label for="KT">Kennitala</label>
-      <input type="text" class="form-control" name="KT" placeholder="Kennitala" >
-    </div>  
-    
-    <div class="form-group">
-      <label for="formGroupExampleInput">Nafn</label>
-      <input type="text" class="form-control" name="NAFN" placeholder="Nafn" >
-    </div>
-      
-    <div class="form-group">
-      <label for="formGroupExampleInput">Símanúmer</label>
-      <input type="text" class="form-control" name="SIMI" placeholder="Símanúmer" >
-    </div>
+  <div class="field<%= locals.isInvalid('KT', errors) ?  ' field--invalid' : '' %>">
+    <label for="KT">Kennitala</label>
+    <input type="text" class="form-control" name="KT" placeholder="Kennitala" >
+  </div>  
   
-    <div class="form-group">
-      <label for="inputEmail4">Netfang</label>
-      <input type="email" class="form-control" name="NETFANG" placeholder="Tölvupósur" >
-    </div>
+  <div class="field<%= locals.isInvalid('NAFN', errors) ?  ' field--invalid' : '' %>">
+    <label for="NAFN">Nafn</label>
+    <input type="text" class="form-control" name="NAFN" placeholder="Nafn" >
+  </div>
+    
+  <div class="field<%= locals.isInvalid('SIMI', errors) ?  ' field--invalid' : '' %>">
+    <label for="SIMI">Símanúmer</label>
+    <input type="text" class="form-control" name="SIMI" placeholder="Símanúmer" >
+  </div>
+
+  <div class="field<%= locals.isInvalid('NETFANG', errors) ?  ' field--invalid' : '' %>">
+    <label for="NETFANG">Netfang</label>
+    <input type="email" class="form-control" name="NETFANG" placeholder="Tölvupósur" >
+  </div>
     
     <br>
 

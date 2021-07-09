@@ -1,3 +1,8 @@
+//////////////////////
+//                  //
+//  Version : 0.1   //
+//                  //
+//////////////////////
 const express = require('express');
 const bodyParser= require('body-parser')
 const path = require("path");
@@ -7,8 +12,6 @@ var db = require('./database/db.js');
 const { json } = require('body-parser');
 const { get } = require('http');
 const { body, validationResult } = require('express-validator');
-const { SSL_OP_NO_QUERY_MTU } = require('constants');
-
 const hostname = "127.0.0.1";
 const port = 3000; 
 
@@ -29,11 +32,54 @@ function isInvalid(field, errors = [] ){
 
 app.locals.isInvalid = isInvalid; 
 
+const nationalIdPattern = '^[0-9]{6}-?[0-9]{4}$';
+
 const validationMiddleware = [
     body('KT')
         .isLength( { min : 1 })
-        .withMessage('Ekki tóma kennitala')
+        .withMessage('Kennitala má ekki vera tómt'),
+    body('KT')
+        .matches(new RegExp(nationalIdPattern))
+        .withMessage('Kennitala verður að vera á formi 000000-0000 eða 0000000000'),
+    body('NAFN')
+        .isLength( {min : 1 })
+        .withMessage('Nafn má ekki vera tómt'),
+    body('NAFN')
+        .isLength( { max : 128 })
+        .withMessage('Nafn má að hámarki vera 128 stafir'),
+    body('SIMI')
+        .isLength( { min : 1 })
+        .withMessage( 'Símanúmer má ekki vera tómt'),
+    body('SIMI')
+        .matches(/\d/)
+        .withMessage('Símanúmer verður innihaldi tölur'),
+    body('SIMI')
+        .isLength( { max : 8 })
+        .withMessage( 'Símanúmer er hámark 8'), 
+    body('NETFANG')
+        .isEmail()
+        .withMessage('Vantar tölvupóstur'),     
 ];
+
+/**********/
+//  CHECK  /
+/**********/
+async function validationCheck(req, res, next) {
+    const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Táknmálstúlkur';
+    const {
+      KT, nafn, simanumer, email,
+    } = req.body;
+    
+    const validation = validationResult(req);
+  
+    if (!validation.isEmpty()) {
+      return res.render('profa', { errors: validation.errors, title, subtitle });
+    }
+   
+    return next();
+}
+
 
 /**************/
 // Main Home  //
@@ -137,6 +183,18 @@ async function addUsers(req, res){
     console.log('Request for home rec');
     res.render('addusers', {errors, title, subtitle });
 }
+
+/**********/
+// Birta-Prófa  //
+/**********/
+async function profa(req, res){
+    const errors = []; 
+    const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Bæta nýr táknamálstúlk';
+    console.log('profa profa');
+    res.render('profa', {errors, title, subtitle });
+}
+  
    
 /**********/
 // Birta  //
@@ -156,6 +214,20 @@ async function addprojects(req, res){
     }
     catch(e){
         console.error(e);
+    }
+}
+
+/************/
+// Innsetja prófa //
+/************/
+async function profa_post(req,res){
+    try{ 
+        console.log("profa að birta...");
+
+        res.redirect('/');
+    }
+    catch(e){
+        console.error(e); 
     }
 }
 
@@ -390,28 +462,6 @@ async function tulkurupdate(req, res){
     }
 }
 
-/**********/
-//  CHECK  /
-/**********/
-async function validationCheck(req, res, next) {
-    const {
-      KT
-    } = req.body;
-  
-    /*const formData = {
-      name, nationalId, comment, anonymous,
-    };*/
-
-    //const registrations = await list();
-  
-    const validation = validationResult(req);
-  
-    if (!validation.isEmpty()) {
-      return res.render('/addusers', { errors: validation.errors });
-    }
-  
-    return next();
-  }
 
 /**********/
 //  GET    /
@@ -420,6 +470,9 @@ app.get('/', catchErrors(index));
 app.get('/user', catchErrors(user));
 app.get('/userlisti', catchErrors(userlisti)); 
 app.get('/project', catchErrors(project));
+
+app.get('/profa', catchErrors(profa));
+
 app.get('/addusers', catchErrors(addUsers));
 app.get('/addprojects', catchErrors(addprojects)); 
 app.get('/user_select/:KT', catchErrors(user_select));
@@ -430,6 +483,8 @@ app.get('/tulkur_select/:NR', catchErrors(tulkur_select));
 /**********/
 //  POST   /
 /**********/
+app.post('/profa_post', validationMiddleware, catchErrors(validationCheck), urlencodedParser, catchErrors(profa_post));
+
 app.post('/addusers', validationMiddleware, catchErrors(validationCheck), urlencodedParser, catchErrors(addusers));
 app.post('/addprojects', urlencodedParser, catchErrors(addProjects));
 app.post('/userupdate/:KT', urlencodedParser, catchErrors(userupdate));

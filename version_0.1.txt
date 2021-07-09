@@ -74,39 +74,5 @@ Verkefnalist -
 -100%   Velja ein túlk og birta listaverkefni túlka.
 
 #7-7-2012
--0%     Check ef kennitala sé eins   
--0%     Bæta check ef vantar eða rangt input. 
--0%     bæta við admin í sql. 
--0%     admin 
--0%     user, pass login
-
--0%     Búa til Calender 
--0%     Láta verkefni túlka birta í calender.
--0%     nota router og búa til fleira router - userRouter, ProjectRouter. 
-
-ATH: þarf að breyta router úr app.js og búa til indexrouter.js. app.js er bara server-side en indexrouter.js er middlelayer
-sé um routing fyrir síðuna. Líka þarf að búa til user.js með 
-add_user() og update_user() og lika get_list_user()
-
-# Later
-
-Plan in project in future. 
-- CSS 
-- React 
-- Sql-postgresql 
-- Injure
-- XXS 
-- add calender - dagbók 
-- time schema 
-- add custumor - viðskiptavinur
-- add fyrirtæki
-
-###############
-# version 0.2 #
-###############
-- að geta sett verkefni í tímaröð og ráða - nýjasta efst? eða nýjast neðst- báða möguleika. Röðin núna er óskipulögð
-- að geta leitað í grunninum, leitað að túlki, leitað að stað (til dæmis Marel) leita að döff og fleira 
-- að geta skráð tvo túlka í verkefni eða fleiri, stundum eru til dæmis 5-6 túlkar í sama verkefni
-- að geta skráð fleiri en 1 döff, eða sett Félagar í félagi heyrnarlausra - það er stundum gert fyrir hóp af döff
-- það þarf að athuga með persónuvernd, það eru strangar reglur um kennitölur og persónuupplýsingar
-
+-0%     Check ef kennitala sé eins.   
+-100%   Bæta check ef vantar eða rangt input. 
