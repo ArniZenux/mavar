@@ -1,5 +1,4 @@
-# mavar
-Mávar - túlksþjónustan
+# Mávaar - Túlkunarþjónusta. 
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
@@ -53,8 +52,8 @@ This section should list any major frameworks that you built your project using.
 
 ## The version
 * 0.1
-    -bla 
-    -bla 
+    1. bla 
+    2. bla 
 * 0.2
-    -bla
-    -bla 
+    1. bla
+    2. bla 
