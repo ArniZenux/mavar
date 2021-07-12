@@ -34,7 +34,7 @@ app.locals.isInvalid = isInvalid;
 
 const nationalIdPattern = '^[0-9]{6}-?[0-9]{4}$';
 
-const validationMiddleware = [
+const UserMiddleware = [
     body('KT')
         .isLength( { min : 1 })
         .withMessage('Kennitala má ekki vera tómt'),
@@ -61,10 +61,37 @@ const validationMiddleware = [
         .withMessage('Vantar tölvupóstur'),     
 ];
 
+const ProjectMiddleware = [
+    body('HEITI')
+        .isLength( { min : 1 })
+        .withMessage('Nafn verkefna má ekki vera tómt'),
+    body('STADUR')
+        .isLength( {min : 1} )
+        .withMessage('Staður má ekki vera tómt'),
+    body('DAGUR')
+        .isLength( {min : 1 })
+        .withMessage('Dagssetningur má ekki vera tómt'),
+    body('TIMI_BYRJA')
+        .isLength( { max : 5 })
+        .withMessage('Timasetningur má að hámarki vera 5 stafir, ##:##'),
+    body('TIMI_BYRJA')
+        .isLength( { min : 1 })
+        .withMessage('Timasetningur má ekki vera tómt, ##:##'),
+    body('TIMI_ENDIR')
+        .isLength( { max : 5 })
+        .withMessage('Timasetningur má að hámarki vera 5 stafir, ##:##'),
+    body('TIMI_ENDIR')
+        .isLength( { min : 1 })
+        .withMessage('Timasetningur má ekki vera tómt, ##:##'),
+    body('VETTVANGUR')
+        .isLength( { min : 1 })
+        .withMessage('Vettvangur má ekki að vera tómt'),     
+];
+
 /**********/
 //  CHECK  /
 /**********/
-async function validationCheck(req, res, next) {
+async function UserCheck(req, res, next) {
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Táknmálstúlkur';
     const {
@@ -74,12 +101,28 @@ async function validationCheck(req, res, next) {
     const validation = validationResult(req);
   
     if (!validation.isEmpty()) {
-      return res.render('profa', { errors: validation.errors, title, subtitle });
+      return res.render('addusers', { errors: validation.errors, title, subtitle });
     }
    
     return next();
 }
 
+async function ProjectCheck(req, res, next) {
+    const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Bæta nýtt verkefni';
+    var model = 'arni';
+    const {
+      heiti, dagur, stadur, timi_byrja, timi_endir, vettvangur
+    } = req.body;
+    
+    const validation = validationResult(req);
+  
+    if (!validation.isEmpty()) {
+      return res.render('addprojects', { errors: validation.errors, title, subtitle,model:model });
+    }
+   
+    return next();
+}
 
 /**************/
 // Main Home  //
@@ -182,24 +225,17 @@ async function addUsers(req, res){
     const subtitle = 'Bæta nýr táknamálstúlk';
     console.log('Request for home rec');
     res.render('addusers', {errors, title, subtitle });
-}
-
-/**********/
-// Birta-Prófa  //
-/**********/
-async function profa(req, res){
-    const errors = []; 
-    const title = 'Mávar - túlkuþjónusta';
-    const subtitle = 'Bæta nýr táknamálstúlk';
-    console.log('profa profa');
-    res.render('profa', {errors, title, subtitle });
-}
-  
+}  
    
+/*async function getProject(req, res) {
+
+}*/
+
 /**********/
 // Birta  //
 /**********/
 async function addprojects(req, res){
+    const errors = []; 
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Bæta nýtt verkefni'; 
     console.log('new project - ');
@@ -209,25 +245,11 @@ async function addprojects(req, res){
     try{
         await db.all(sql, [], (err, rows) => {
                 if(err) return console.error(err.message);
-                res.render('addprojects', {title: title , subtitle : subtitle, model : rows }); 
+                res.render('addprojects', {errors, title: title , subtitle : subtitle, model : rows }); 
         });
     }
     catch(e){
         console.error(e);
-    }
-}
-
-/************/
-// Innsetja prófa //
-/************/
-async function profa_post(req,res){
-    try{ 
-        console.log("profa að birta...");
-
-        res.redirect('/');
-    }
-    catch(e){
-        console.error(e); 
     }
 }
 
@@ -470,9 +492,6 @@ app.get('/', catchErrors(index));
 app.get('/user', catchErrors(user));
 app.get('/userlisti', catchErrors(userlisti)); 
 app.get('/project', catchErrors(project));
-
-app.get('/profa', catchErrors(profa));
-
 app.get('/addusers', catchErrors(addUsers));
 app.get('/addprojects', catchErrors(addprojects)); 
 app.get('/user_select/:KT', catchErrors(user_select));
@@ -483,10 +502,8 @@ app.get('/tulkur_select/:NR', catchErrors(tulkur_select));
 /**********/
 //  POST   /
 /**********/
-app.post('/profa_post', validationMiddleware, catchErrors(validationCheck), urlencodedParser, catchErrors(profa_post));
-
-app.post('/addusers', validationMiddleware, catchErrors(validationCheck), urlencodedParser, catchErrors(addusers));
-app.post('/addprojects', urlencodedParser, catchErrors(addProjects));
+app.post('/addusers', UserMiddleware, catchErrors(UserCheck), urlencodedParser, catchErrors(addusers));
+app.post('/addprojects', ProjectMiddleware, catchErrors(ProjectCheck), urlencodedParser, catchErrors(addProjects));
 app.post('/userupdate/:KT', urlencodedParser, catchErrors(userupdate));
 app.post('/projectupdate/:NR', urlencodedParser, catchErrors(projectupdate));
 app.post('/tulkurupdate/:NR', urlencodedParser, catchErrors(tulkurupdate));

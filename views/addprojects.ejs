@@ -6,32 +6,32 @@
 
 <form method="post" action="/addprojects">
 
-    <div class="form-group">
+    <div class="field<%= locals.isInvalid('HEITI', errors) ?  ' field--invalid' : '' %>">
       <label for="formGroupExampleInput">Heiti</label>
       <input type="text" class="form-control" name="HEITI" placeholder="Heiti verkefna">
     </div>  
     
-    <div class="form-group">
+    <div class="field<%= locals.isInvalid('STADUR', errors) ?  ' field--invalid' : '' %>">
       <label for="formGroupExampleInput">Staður</label>
       <input type="text" class="form-control" name="STADUR" placeholder="Staður">
     </div>
       
-    <div class="form-group">
+    <div class="field<%= locals.isInvalid('DAGUR', errors) ?  ' field--invalid' : '' %>">
       <label for="formGroupExampleInput">Dagur</label>
       <input type="text" class="form-control" name="DAGUR" placeholder="Dagur">
     </div>
 
-    <div class="form-group">
+    <div class="field<%= locals.isInvalid('TIMI_BYRJA', errors) ?  ' field--invalid' : '' %>">
       <label for="formGroupExampleInput">Byrja</label>
       <input type="text" class="form-control" name="TIMI_BYRJA" placeholder="Byrja">
     </div>
     
-    <div class="form-group">
+    <div class="field<%= locals.isInvalid('TIMI_ENDIR', errors) ?  ' field--invalid' : '' %>">
       <label for="formGroupExampleInput">Endir</label>
       <input type="text" class="form-control" name="TIMI_ENDIR" placeholder="Endir">
     </div>
 
-    <div class="form-group">
+    <div class="field<%= locals.isInvalid('VETTVANGUR', errors) ?  ' field--invalid' : '' %>">
       <label for="formGroupExampleInput">Vettvangur</label>
       <input type="text" class="form-control" name="VETTVANGUR" placeholder="Vettvangur">
     </div>
@@ -47,6 +47,18 @@
     </div>
    
     <br>
+    
+      <% if (errors.length > 0) { %>
+        <h2 class="errors__title">Villur:</h2>
+        <ul class="errors">
+          <% errors.forEach((error) => { %>
+            <li class="error"><label for="<%= error.param %>"><%= error.msg %></label></li>
+          <% }); %>
+        </ul>
+      <% } %>
+    
+    <br>
+
     <button class="btn btn-sm btn-success">Skrá</button>
   </form>
 

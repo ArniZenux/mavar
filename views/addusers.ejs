@@ -4,32 +4,32 @@
 
 <h2 class="header__title"><%= subtitle %></h2>
  
-<form method="post" action="/addusers">
+<form method="post" action="/addusers" enctype="application/x-www-form-urlencoded">
 
   <div class="field<%= locals.isInvalid('KT', errors) ?  ' field--invalid' : '' %>">
     <label for="KT">Kennitala</label>
     <input type="text" class="form-control" name="KT" placeholder="Kennitala" >
   </div>  
   
-  <div class="field<%= locals.isInvalid('NAFN', errors) ?  ' field--invalid' : '' %>">
-    <label for="NAFN">Nafn</label>
-    <input type="text" class="form-control" name="NAFN" placeholder="Nafn" >
+  <div class="field<%= locals.isInvalid('nafn', errors) ?  ' field--invalid' : '' %>">
+    <label for="nafn">Nafn</label>
+    <input type="text" class="form-control" name="nafn" placeholder="Nafn" >
   </div>
     
-  <div class="field<%= locals.isInvalid('SIMI', errors) ?  ' field--invalid' : '' %>">
-    <label for="SIMI">Símanúmer</label>
-    <input type="text" class="form-control" name="SIMI" placeholder="Símanúmer" >
+  <div class="field<%= locals.isInvalid('simanumer', errors) ?  ' field--invalid' : '' %>">
+    <label for="simanumer">Símanúmer</label>
+    <input type="text" class="form-control" name="simanumer" placeholder="Símanúmer" >
   </div>
 
-  <div class="field<%= locals.isInvalid('NETFANG', errors) ?  ' field--invalid' : '' %>">
-    <label for="NETFANG">Netfang</label>
-    <input type="email" class="form-control" name="NETFANG" placeholder="Tölvupósur" >
+  <div class="field<%= locals.isInvalid('email', errors) ?  ' field--invalid' : '' %>">
+    <label for="email">Netfang</label>
+    <input type="email" class="form-control" name="email" placeholder="Tölvupósur" >
   </div>
     
     <br>
 
     <% if (errors.length > 0) { %>
-      <h2 class="errors__title">Villur við undirskrift:</h2>
+      <h2 class="errors__title">Villur:</h2>
       <ul class="errors">
         <% errors.forEach((error) => { %>
           <li class="error"><label for="<%= error.param %>"><%= error.msg %></label></li>
