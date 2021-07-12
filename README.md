@@ -1,4 +1,4 @@
-# Mávaar - Túlkunarþjónusta. 
+# Mávar - Túlkunarþjónusta. 
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
@@ -11,7 +11,7 @@
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#The version">Version</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>

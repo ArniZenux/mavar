@@ -41,22 +41,22 @@ const UserMiddleware = [
     body('KT')
         .matches(new RegExp(nationalIdPattern))
         .withMessage('Kennitala verður að vera á formi 000000-0000 eða 0000000000'),
-    body('NAFN')
+    body('nafn')
         .isLength( {min : 1 })
         .withMessage('Nafn má ekki vera tómt'),
-    body('NAFN')
+    body('nafn')
         .isLength( { max : 128 })
         .withMessage('Nafn má að hámarki vera 128 stafir'),
-    body('SIMI')
+    body('simanumer')
         .isLength( { min : 1 })
         .withMessage( 'Símanúmer má ekki vera tómt'),
-    body('SIMI')
+    body('simanumer')
         .matches(/\d/)
         .withMessage('Símanúmer verður innihaldi tölur'),
-    body('SIMI')
+    body('simanumer')
         .isLength( { max : 8 })
         .withMessage( 'Símanúmer er hámark 8'), 
-    body('NETFANG')
+    body('email')
         .isEmail()
         .withMessage('Vantar tölvupóstur'),     
 ];
@@ -88,9 +88,9 @@ const ProjectMiddleware = [
         .withMessage('Vettvangur má ekki að vera tómt'),     
 ];
 
-/**********/
-//  CHECK  /
-/**********/
+/***********/
+//  CHECK  //
+/***********/
 async function UserCheck(req, res, next) {
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Táknmálstúlkur';
@@ -107,20 +107,42 @@ async function UserCheck(req, res, next) {
     return next();
 }
 
+/**********/
+//  CHECK  /
+/**********/
 async function ProjectCheck(req, res, next) {
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Bæta nýtt verkefni';
     var model = 'arni';
+
     const {
       heiti, dagur, stadur, timi_byrja, timi_endir, vettvangur
     } = req.body;
     
     const validation = validationResult(req);
-  
+
     if (!validation.isEmpty()) {
-      return res.render('addprojects', { errors: validation.errors, title, subtitle,model:model });
+      return res.render('addprojects', { errors: validation.errors, title: title, subtitle: subtitle, model : model });
     }
+
+    const sql = "SELECT * FROM tblTulkur";
    
+    /*try{
+        db.all(sql, [], (err, rows) => {
+    
+            if(err) {
+                return console.error(err.message);
+            }
+
+            else if(!validation.isEmpty()) {
+               return res.render('addprojects', { errors: validation.errors, title: title, subtitle: subtitle, model : rows });
+            }
+            //res.render('addprojects', {errors, title: title , subtitle : subtitle, model : rows }); 
+        });
+    }
+    catch(e){
+        console.error(e);
+    }*/
     return next();
 }
 
@@ -227,9 +249,24 @@ async function addUsers(req, res){
     res.render('addusers', {errors, title, subtitle });
 }  
    
-/*async function getProject(req, res) {
+const tulkur = async function getTulkur(req, res) {
+    const sql = "SELECT * FROM tblTulkur";
+    try{
+        await db.each(sql, [], (err, rows) => {
+            if(err) {
+                return console.log(err.message);
+            }  
 
-}*/
+            return rows;         
+
+        });
+    }
+    catch(e){
+        console.error(e.message); 
+    }
+} 
+
+console.log(`${ tulkur.nafn} `);
 
 /**********/
 // Birta  //
@@ -258,14 +295,13 @@ async function addprojects(req, res){
 /************/
 async function addusers(req, res){
     const sql = "INSERT INTO tblTulkur (KT, NAFN, SIMI, NETFANG) VALUES( ? , ? , ? , ? )";
-    const tulkur = [req.body.KT, req.body.NAFN, req.body.SIMI, req.body.NETFANG];
+    const tulkur = [req.body.KT, req.body.nafn, req.body.simanumer, req.body.email];
     let success = true; 
 
     try{
         await db.run(sql, tulkur, err => {
                 if (err){
                     console.error(err.message); 
-                    
                 } 
                 else{
                     if (success === true){
@@ -484,7 +520,6 @@ async function tulkurupdate(req, res){
     }
 }
 
-
 /**********/
 //  GET    /
 /**********/
@@ -504,10 +539,10 @@ app.get('/tulkur_select/:NR', catchErrors(tulkur_select));
 /**********/
 app.post('/addusers', UserMiddleware, catchErrors(UserCheck), urlencodedParser, catchErrors(addusers));
 app.post('/addprojects', ProjectMiddleware, catchErrors(ProjectCheck), urlencodedParser, catchErrors(addProjects));
+//app.post('/addprojects', urlencodedParser, catchErrors(addProjects));
 app.post('/userupdate/:KT', urlencodedParser, catchErrors(userupdate));
 app.post('/projectupdate/:NR', urlencodedParser, catchErrors(projectupdate));
 app.post('/tulkurupdate/:NR', urlencodedParser, catchErrors(tulkurupdate));
-
 
 /*****************/
 //  Handler error /
