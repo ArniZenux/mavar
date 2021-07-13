@@ -12,4 +12,25 @@ let db = new sqlite3.Database(Dbase, (err) => {
 	console.log('Connected to tulkur database');
 });
 
-module.exports = db; 
+async function getTulkur(){
+	let result = []; 
+
+	const sql = "SELECT * FROM tblTulkur";
+	try{
+        const queryList = await db.all(sql, [], (err, rows) => {
+                if(err) {
+					return console.error(err.message);
+				}
+        });
+		result = queryList; 
+
+    }
+    catch(e){
+        console.error(e.message); 
+    }
+	
+	return result; 
+
+}
+
+module.exports = { db, getTulkur }; 

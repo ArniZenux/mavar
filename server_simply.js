@@ -8,7 +8,10 @@ const bodyParser= require('body-parser')
 const path = require("path");
 const fs = require('fs').promises;
 const app = express(); 
-var db = require('./database/db.js');
+
+//var db = require('./database/db.js');
+var {getTulkur, db} = require('./database/db.js');
+
 const { json } = require('body-parser');
 const { get } = require('http');
 const { body, validationResult } = require('express-validator');
@@ -113,7 +116,8 @@ async function UserCheck(req, res, next) {
 async function ProjectCheck(req, res, next) {
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Bæta nýtt verkefni';
-    var model = 'arni';
+    const sql = "SELECT * FROM tblTulkur";
+    const model = 'Arni'; 
 
     const {
       heiti, dagur, stadur, timi_byrja, timi_endir, vettvangur
@@ -121,12 +125,12 @@ async function ProjectCheck(req, res, next) {
     
     const validation = validationResult(req);
 
+    //const list_tulkur = getTulkur(); 
+
     if (!validation.isEmpty()) {
       return res.render('addprojects', { errors: validation.errors, title: title, subtitle: subtitle, model : model });
     }
 
-    const sql = "SELECT * FROM tblTulkur";
-   
     /*try{
         db.all(sql, [], (err, rows) => {
     
@@ -265,8 +269,6 @@ const tulkur = async function getTulkur(req, res) {
         console.error(e.message); 
     }
 } 
-
-console.log(`${ tulkur.nafn} `);
 
 /**********/
 // Birta  //

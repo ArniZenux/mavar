@@ -13,7 +13,23 @@ async function lesa(){
     });
 }
 
-lesa(); 
+async function lesa1(){
+    var sql = 'Select * from tblTulkur'; 
+    var params = []; 
+    let result = []; 
+
+    result =  db.all(sql, params, (err, row) => {
+        if(err){ 
+            return console.log(err.message ); 
+        }
+        //console.log(row); 
+        result = row; 
+    })
+    var json = JSON.parse(result); 
+    console.log(JSON.stringify(json));    
+}
+
+lesa1(); 
 
 db.close((err) => {
     if(err) {
