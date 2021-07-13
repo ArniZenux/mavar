@@ -127,26 +127,26 @@ async function ProjectCheck(req, res, next) {
 
     //const list_tulkur = getTulkur(); 
 
-    if (!validation.isEmpty()) {
+    /*if (!validation.isEmpty()) {
       return res.render('addprojects', { errors: validation.errors, title: title, subtitle: subtitle, model : model });
-    }
+    }*/
 
-    /*try{
-        db.all(sql, [], (err, rows) => {
+    try{
+        await db.all(sql, [], (err, rows) => {
     
             if(err) {
                 return console.error(err.message);
             }
 
             else if(!validation.isEmpty()) {
-               return res.render('addprojects', { errors: validation.errors, title: title, subtitle: subtitle, model : rows });
+               return res.render('addprojects', { errors: validation.errors, title, subtitle, model : rows });
             }
             //res.render('addprojects', {errors, title: title , subtitle : subtitle, model : rows }); 
         });
     }
     catch(e){
         console.error(e);
-    }*/
+    }
     return next();
 }
 
