@@ -8,6 +8,7 @@ const bodyParser= require('body-parser')
 const path = require("path");
 const fs = require('fs').promises;
 const app = express(); 
+const Joi = require('joi');
 
 //var db = require('./database/db.js');
 var {getTulkur, db} = require('./database/db.js');
@@ -15,6 +16,7 @@ var {getTulkur, db} = require('./database/db.js');
 const { json } = require('body-parser');
 const { get } = require('http');
 const { body, validationResult } = require('express-validator');
+const { getgid } = require('process');
 const hostname = "127.0.0.1";
 const port = 3000; 
 
@@ -44,6 +46,9 @@ const UserMiddleware = [
     body('KT')
         .matches(new RegExp(nationalIdPattern))
         .withMessage('Kennitala verður að vera á formi 000000-0000 eða 0000000000'),
+    body('KT')
+        .matches(new RegExp(nationalIdPattern))
+        .withMessage('Kennitala er sama'),
     body('nafn')
         .isLength( {min : 1 })
         .withMessage('Nafn má ekki vera tómt'),
@@ -94,7 +99,69 @@ const ProjectMiddleware = [
 /***********/
 //  CHECK  //
 /***********/
+async function CheckKennitala(req, res, next){
+    const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Táknmálstúlkur';
+    const getKT = "SELECT * FROM tblTulkur WHERE KT = ? ";
+    const kennitala = [req.body.KT];
+    
+    const validation = validationResult(req);
+
+    try{
+        await db.get(getKT,kennitala , (err,rows) => {
+                 if (err){
+                     console.error(err.message); 
+                 }
+ 
+                 else{
+                     console.log('Tókst að ná kennitala túlka');
+                     const kt = rows.KT;  
+                     console.log(kt);
+                     
+                    if(kennitala == kt){
+                         console.log("sama");
+                         if (!validation.isEmpty()) {
+                            return res.render('addusers', { errors: 'Sama kennitala', title, subtitle });
+                         }
+                    }
+
+                    else{
+                         console.log("fuckyiou");
+                         
+                    } 
+                 }
+         });
+     }
+ 
+     catch(e){
+         console.log(e.message); 
+     }
+}
+
+/***********/
+//  CHECK  //
+/***********/
 async function UserCheck(req, res, next) {
+    const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Táknmálstúlkur';
+   
+    const {
+      KT, nafn, simanumer, email,
+    } = req.body;
+    
+    const validation = validationResult(req);
+
+    if (!validation.isEmpty()) {
+        return res.render('addusers', { errors: validation.errors, title, subtitle });
+    }
+   
+    return next();
+}
+
+/***********/
+//  CHECK  //
+/***********/
+async function UpdateUserCheck(req, res, next){
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Táknmálstúlkur';
     const {
@@ -104,7 +171,8 @@ async function UserCheck(req, res, next) {
     const validation = validationResult(req);
   
     if (!validation.isEmpty()) {
-      return res.render('addusers', { errors: validation.errors, title, subtitle });
+      return res.render('userupdate', { errors: validation.errors, title, subtitle });
+      //return res.render('userupdate', { title, subtitle });
     }
    
     return next();
@@ -304,7 +372,7 @@ async function addusers(req, res){
         await db.run(sql, tulkur, err => {
                 if (err){
                     console.error(err.message); 
-                } 
+                }
                 else{
                     if (success === true){
                         res.redirect('/');
@@ -447,7 +515,7 @@ async function tulkur_select(req, res){
 /***********/
 async function userupdate(req, res){
     const KT = req.params.KT;
-    const tulkur = [req.body.NAFN, req.body.SIMI, req.body.NETFANG, KT];
+    const tulkur = [req.body.nafn, req.body.simanumer, req.body.email, KT];
     const sql = "UPDATE tblTulkur SET NAFN = ?, SIMI = ? , NETFANG = ? WHERE (KT = ?)";
     try{
         await db.run(sql, tulkur, err => {
@@ -539,9 +607,9 @@ app.get('/tulkur_select/:NR', catchErrors(tulkur_select));
 /**********/
 //  POST   /
 /**********/
-app.post('/addusers', UserMiddleware, catchErrors(UserCheck), urlencodedParser, catchErrors(addusers));
+app.post('/addusers', UserMiddleware, catchErrors(CheckKennitala), catchErrors(UserCheck), urlencodedParser, catchErrors(addusers));
+//app.post('/addusers', urlencodedParser, catchErrors(addusers));
 app.post('/addprojects', ProjectMiddleware, catchErrors(ProjectCheck), urlencodedParser, catchErrors(addProjects));
-//app.post('/addprojects', urlencodedParser, catchErrors(addProjects));
 app.post('/userupdate/:KT', urlencodedParser, catchErrors(userupdate));
 app.post('/projectupdate/:NR', urlencodedParser, catchErrors(projectupdate));
 app.post('/tulkurupdate/:NR', urlencodedParser, catchErrors(tulkurupdate));

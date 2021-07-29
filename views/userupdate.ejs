@@ -4,28 +4,39 @@
 
 <h2 class="header__title"><%= subtitle %></h2>
  
-<form method="post" action="/userupdate/<%= model.KT %>" >
+<form method="post" action="/userupdate/<%= model.KT %>" enctype="application/x-www-form-urlencoded" >
 
     <div class="form-group">
       <label for="nationalId">Kennitala</label>
       <input type="text" class="form-control" name="KT" placeholder="<%= model.KT %>" >
     </div>  
     
-    <div class="form-group">
+    <div class="field<%= locals.isInvalid('nafn', errors) ?  ' field--invalid' : '' %>">
       <label for="name">Nafn</label>
-      <input type="text" class="form-control" name="NAFN" value="<%= model.NAFN %>" placeholder="<%= model.NAFN %>" >
+      <input type="text" class="form-control" name="nafn" value="<%= model.NAFN %>" placeholder="<%= model.NAFN %>" >
     </div>
       
-    <div class="form-group">
-      <label for="nationalId">Símanúmer</label>
-      <input type="text" class="form-control" name="SIMI" value="<%= model.SIMI %>" placeholder="<%= model.SIMI %>" >
+    <div class="field<%= locals.isInvalid('simanumer', errors) ?  ' field--invalid' : '' %>">
+      <label for="simanumer">Símanúmer</label>
+      <input type="text" class="form-control" name="simanumer" value="<%= model.SIMI %>" placeholder="<%= model.SIMI %>" >
     </div>
 
-    <div class="form-group">
-      <label for="nationalId">Netfang</label>
-      <input type="email" class="form-control" name="NETFANG" value="<%= model.NETFANG %>" placeholder="<%= model.NETFANG %>" >
+    <div class="field<%= locals.isInvalid('email', errors) ?  ' field--invalid' : '' %>">
+      <label for="email">Netfang</label>
+      <input type="email" class="form-control" name="email" value="<%= model.NETFANG %>" placeholder="<%= model.NETFANG %>" >
     </div>
     
+    <br>
+    
+    <% if (errors.length > 0) { %>
+      <h2 class="errors__title">Villur:</h2>
+      <ul class="errors">
+        <% errors.forEach((error) => { %>
+          <li class="error"><label for="<%= error.param %>"><%= error.msg %></label></li>
+        <% }); %>
+      </ul>
+    <% } %>
+
     <br>
 
     <button class="btn btn-sm btn-warning">Uppfæra</button>
