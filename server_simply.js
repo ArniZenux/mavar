@@ -46,10 +46,7 @@ const UserMiddleware = [
     body('KT')
         .matches(new RegExp(nationalIdPattern))
         .withMessage('Kennitala verður að vera á formi 000000-0000 eða 0000000000'),
-    body('KT')
-        .matches(new RegExp(nationalIdPattern))
-        .withMessage('Kennitala er sama'),
-    body('nafn')
+     body('nafn')
         .isLength( {min : 1 })
         .withMessage('Nafn má ekki vera tómt'),
     body('nafn')
@@ -96,47 +93,6 @@ const ProjectMiddleware = [
         .withMessage('Vettvangur má ekki að vera tómt'),     
 ];
 
-/***********/
-//  CHECK  //
-/***********/
-async function CheckKennitala(req, res, next){
-    const title = 'Mávar - túlkuþjónusta';
-    const subtitle = 'Táknmálstúlkur';
-    const getKT = "SELECT * FROM tblTulkur WHERE KT = ? ";
-    const kennitala = [req.body.KT];
-    
-    const validation = validationResult(req);
-
-    try{
-        await db.get(getKT,kennitala , (err,rows) => {
-                 if (err){
-                     console.error(err.message); 
-                 }
- 
-                 else{
-                     console.log('Tókst að ná kennitala túlka');
-                     const kt = rows.KT;  
-                     console.log(kt);
-                     
-                    if(kennitala == kt){
-                         console.log("sama");
-                         if (!validation.isEmpty()) {
-                            return res.render('addusers', { errors: 'Sama kennitala', title, subtitle });
-                         }
-                    }
-
-                    else{
-                         console.log("fuckyiou");
-                         
-                    } 
-                 }
-         });
-     }
- 
-     catch(e){
-         console.log(e.message); 
-     }
-}
 
 /***********/
 //  CHECK  //
@@ -172,7 +128,6 @@ async function UpdateUserCheck(req, res, next){
   
     if (!validation.isEmpty()) {
       return res.render('userupdate', { errors: validation.errors, title, subtitle });
-      //return res.render('userupdate', { title, subtitle });
     }
    
     return next();
@@ -364,6 +319,7 @@ async function addprojects(req, res){
 // Innsetja //
 /************/
 async function addusers(req, res){
+    const title = 'Mávar - túlkuþjónusta';
     const sql = "INSERT INTO tblTulkur (KT, NAFN, SIMI, NETFANG) VALUES( ? , ? , ? , ? )";
     const tulkur = [req.body.KT, req.body.nafn, req.body.simanumer, req.body.email];
     let success = true; 
@@ -371,16 +327,11 @@ async function addusers(req, res){
     try{
         await db.run(sql, tulkur, err => {
                 if (err){
-                    console.error(err.message); 
+                    res.render('error', {title, suberror: 'Gat ekki skráð', subtitle : 'Hafði þú skrifað undir áður?'} ); 
                 }
-                else{
-                    if (success === true){
+                else if (success === true){
                         res.redirect('/');
                         console.log('Tokst að skra');
-                       }
-                    else{
-                        res.render('error', { title: 'Gat ekki skráð', subtitle : 'Eitthvað er drasl'} ); 
-                    }
                 }
         });
     }
@@ -446,7 +397,7 @@ async function user_select(req, res){
         await db.get(sql, KT, (err, rows) => {
                 if(err) return console.error(err.message); 
                 console.log("KT: ", KT);
-                res.render('userupdate', {subtitle : subtitle, title : title, model : rows })
+                res.render('userupdate', {errors: [], subtitle : subtitle, title : title, model : rows })
         }) 
     }
     catch(e){
@@ -607,7 +558,7 @@ app.get('/tulkur_select/:NR', catchErrors(tulkur_select));
 /**********/
 //  POST   /
 /**********/
-app.post('/addusers', UserMiddleware, catchErrors(CheckKennitala), catchErrors(UserCheck), urlencodedParser, catchErrors(addusers));
+app.post('/addusers', UserMiddleware, catchErrors(UserCheck), urlencodedParser, catchErrors(addusers));
 //app.post('/addusers', urlencodedParser, catchErrors(addusers));
 app.post('/addprojects', ProjectMiddleware, catchErrors(ProjectCheck), urlencodedParser, catchErrors(addProjects));
 app.post('/userupdate/:KT', urlencodedParser, catchErrors(userupdate));
