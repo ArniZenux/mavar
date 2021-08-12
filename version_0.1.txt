@@ -73,7 +73,15 @@ Verkefnalist -
 -100%   Downdrop - túlkur  
 -100%   Velja ein túlk og birta listaverkefni túlka.
 
-#7-7-2012
+#7-7-2021
 -0%     Check ef kennitala sé eins.   
 -100%   Bæta check ef vantar eða rangt input. 
 -90%   Add user og Add proejct með villuhöndlun. 
+
+11,12 
+klára og lendi vesen með check..
+
+#13-7-2021
+- skoða Joi 
+https://dev.to/itnext/joi-awesome-code-validation-for-node-js-and-express-35pk
+lendi vesen með check í 
