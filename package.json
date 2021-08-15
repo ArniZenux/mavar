@@ -2,7 +2,7 @@
   "name": "mavar",
   "version": "1.0.0",
   "description": "Mávar - túlksþjónustan",
-  "main": "server_simply.js",
+  "main": "server_02.js",
   "dependencies": {
     "body-parser": "^1.19.0",
     "ejs": "^3.1.6",

@@ -4,26 +4,26 @@
 
 <h2 class="header__title"><%= subtitle %></h2>
  
-<form method="post" action="/userupdate/<%= model.KT %>" enctype="application/x-www-form-urlencoded" >
+<form method="post" action="/userupdate/<%= model.kt %>" enctype="application/x-www-form-urlencoded" >
 
     <div class="form-group">
       <label for="nationalId">Kennitala</label>
-      <input type="text" class="form-control" name="KT" placeholder="<%= model.KT %>" >
+      <input type="text" class="form-control" name="KT" placeholder="<%= model.kt %>" >
     </div>  
     
     <div class="field<%= locals.isInvalid('nafn', errors) ?  ' field--invalid' : '' %>">
       <label for="name">Nafn</label>
-      <input type="text" class="form-control" name="nafn" value="<%= model.NAFN %>" placeholder="<%= model.NAFN %>" >
+      <input type="text" class="form-control" name="nafn" value="<%= model.nafn %>" placeholder="<%= model.nafn %>" >
     </div>
       
     <div class="field<%= locals.isInvalid('simanumer', errors) ?  ' field--invalid' : '' %>">
       <label for="simanumer">Símanúmer</label>
-      <input type="text" class="form-control" name="simanumer" value="<%= model.SIMI %>" placeholder="<%= model.SIMI %>" >
+      <input type="text" class="form-control" name="simanumer" value="<%= model.simi %>" placeholder="<%= model.simi %>" >
     </div>
 
     <div class="field<%= locals.isInvalid('email', errors) ?  ' field--invalid' : '' %>">
       <label for="email">Netfang</label>
-      <input type="email" class="form-control" name="email" value="<%= model.NETFANG %>" placeholder="<%= model.NETFANG %>" >
+      <input type="email" class="form-control" name="email" value="<%= model.netfang %>" placeholder="<%= model.netfang %>" >
     </div>
     
     <br>
