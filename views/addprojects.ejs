@@ -6,42 +6,42 @@
 
 <form method="post" action="/addprojects">
 
-    <div class="field<%= locals.isInvalid('HEITI', errors) ?  ' field--invalid' : '' %>">
+    <div class="field<%= locals.isInvalid('heiti', errors) ?  ' field--invalid' : '' %>">
       <label for="formGroupExampleInput">Heiti</label>
-      <input type="text" class="form-control" name="HEITI" placeholder="Heiti verkefna">
+      <input type="text" class="form-control" name="heiti" placeholder="Heiti verkefna">
     </div>  
     
-    <div class="field<%= locals.isInvalid('STADUR', errors) ?  ' field--invalid' : '' %>">
+    <div class="field<%= locals.isInvalid('stadur', errors) ?  ' field--invalid' : '' %>">
       <label for="formGroupExampleInput">Staður</label>
-      <input type="text" class="form-control" name="STADUR" placeholder="Staður">
+      <input type="text" class="form-control" name="stadur" placeholder="Staður">
     </div>
       
-    <div class="field<%= locals.isInvalid('DAGUR', errors) ?  ' field--invalid' : '' %>">
+    <div class="field<%= locals.isInvalid('dagur', errors) ?  ' field--invalid' : '' %>">
       <label for="formGroupExampleInput">Dagur</label>
-      <input type="text" class="form-control" name="DAGUR" placeholder="Dagur">
+      <input type="text" class="form-control" name="dagur" placeholder="Dagur">
     </div>
 
-    <div class="field<%= locals.isInvalid('TIMI_BYRJA', errors) ?  ' field--invalid' : '' %>">
+    <div class="field<%= locals.isInvalid('timi_byrja', errors) ?  ' field--invalid' : '' %>">
       <label for="formGroupExampleInput">Byrja</label>
-      <input type="text" class="form-control" name="TIMI_BYRJA" placeholder="Byrja">
+      <input type="text" class="form-control" name="timi_byrja" placeholder="Byrja">
     </div>
     
-    <div class="field<%= locals.isInvalid('TIMI_ENDIR', errors) ?  ' field--invalid' : '' %>">
+    <div class="field<%= locals.isInvalid('timi_endir', errors) ?  ' field--invalid' : '' %>">
       <label for="formGroupExampleInput">Endir</label>
-      <input type="text" class="form-control" name="TIMI_ENDIR" placeholder="Endir">
+      <input type="text" class="form-control" name="timi_endir" placeholder="Endir">
     </div>
 
-    <div class="field<%= locals.isInvalid('VETTVANGUR', errors) ?  ' field--invalid' : '' %>">
+    <div class="field<%= locals.isInvalid('vettvangur', errors) ?  ' field--invalid' : '' %>">
       <label for="formGroupExampleInput">Vettvangur</label>
-      <input type="text" class="form-control" name="VETTVANGUR" placeholder="Vettvangur">
+      <input type="text" class="form-control" name="vettvangur" placeholder="Vettvangur">
     </div>
 
    
     <div class="form-group">
       <label for="exampleFormControlSelect1">Táknmálstúlkur</label>
-      <select class="form-control" id="NAFN" name="NAFN">
+      <select class="form-control" id="nafn" name="nafn">
         <% for(let user of model) { %>
-        <option name="NAFN"><%= user.NAFN %></option>
+        <option name="nafn"><%= user.nafn %></option>
         <% } %>
       </select>
     </div>

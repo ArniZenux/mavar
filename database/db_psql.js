@@ -23,10 +23,10 @@ async function query(_query, values = []){
 	} 
 }
 
-async function list(_query) {
+async function list(_query, _values) {
 	let result = []; 
 	try {
-		const queryResult = await query(_query);
+		const queryResult = await query(_query, _values);
 
 		if (queryResult && queryResult.rows) {
 			result = queryResult.rows;

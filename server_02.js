@@ -147,12 +147,12 @@ async function ProjectCheck(req, res, next) {
     
     const validation = validationResult(req);
 
-    //const list_tulkur = getTulkur(); 
+    const rows = await list(sql); 
 
-    /*if (!validation.isEmpty()) {
-      return res.render('addprojects', { errors: validation.errors, title: title, subtitle: subtitle, model : model });
-    }*/
-
+    if (!validation.isEmpty()) {
+      return res.render('addprojects', { errors: validation.errors, title: title, subtitle: subtitle, model : rows });
+    }
+    /*
     try{
         await db.all(sql, [], (err, rows) => {
     
@@ -169,6 +169,7 @@ async function ProjectCheck(req, res, next) {
     catch(e){
         console.error(e);
     }
+    */
     return next();
 }
 
@@ -286,33 +287,40 @@ async function addusers(req, res){
     }
 
     res.render('error', {title, suberror: 'Gat ekki skráð', subtitle : 'Hafði þú skrifað undir áður?'} ); 
-
-    /*try{
-        await db.run(sql, tulkur, err => {
-                if (err){
-                    res.render('error', {title, suberror: 'Gat ekki skráð', subtitle : 'Hafði þú skrifað undir áður?'} ); 
-                }
-                else if (success === true){
-                        res.redirect('/');
-                        console.log('Tokst að skra');
-                }
-        });
-    }
-    catch(e){
-        console.error(e); 
-    }*/
-
 }
 
 /************/
 // Innsetja //
 /************/
 async function addProjects(req, res){
-    const sql_verkefni = "INSERT INTO tblVerkefni (HEITI, STADUR, DAGUR, TIMI_BYRJA, TIMI_ENDIR, VETTVANGUR) VALUES(?,?,?,?,?,?)";
-    const sql_vinna = "INSERT INTO tblVinna(KT) VALUES( ? )";
-    const verkefni = [req.body.HEITI, req.body.STADUR, req.body.DAGUR, req.body.TIMI_BYRJA, req.body.TIMI_ENDIR, req.body.VETTVANGUR];
-    const nafn = [req.body.NAFN];
-    const sql_select_kt = "SELECT KT FROM tblTulkur WHERE NAFN = ?";
+    const sql_verkefni = "INSERT INTO tblVerkefni (heiti, stadur, dagur, timi_byrja, timi_endir, vettvangur) VALUES($1, $2, $3, $4, $5, $6)";
+    const sql_vinna = "INSERT INTO tblVinna(nr, kt) VALUES(5, '1411813359')";
+    const verkefni = [req.body.heiti, req.body.stadur, req.body.dagur, req.body.timi_byrja, req.body.timi_endir, req.body.vettvangur];
+    const nafn = [req.body.nafn];
+    const sql_select_kt = 'SELECT kt FROM tblTulkur WHERE nafn = $1';
+
+    let success = true; 
+    let success1 = true; 
+
+    try {
+            const res = await list(sql_select_kt, nafn); 
+            console.log(res.parse());
+            //success = await insert(sql_verkefni, verkefni);
+            //success1 = await insert(sql_vinna);
+    }
+    catch(e){
+        console.error(e);
+    }
+
+    if(success && success1){
+        return res.redirect('/');
+    }
+
+    else{
+        res.render('error', {title, suberror: 'Gat ekki skráð', subtitle : 'Hafði þú skrifað undir áður?'} ); 
+    }
+
+    /*
     try{
         await db.get(sql_select_kt, nafn, (err, rows)  => {
                 if (err){
@@ -346,7 +354,7 @@ async function addProjects(req, res){
     }
     catch(e){
         console.error(e); 
-    }
+    }*/
 }
 
 /***********/
@@ -525,7 +533,8 @@ app.get('/tulkur_select/:NR', catchErrors(tulkur_select));
 
 app.post('/addusers', UserMiddleware, catchErrors(UserCheck), urlencodedParser, catchErrors(addusers));
 app.post('/addusers', urlencodedParser, catchErrors(addusers));
-app.post('/addprojects', ProjectMiddleware, catchErrors(ProjectCheck), urlencodedParser, catchErrors(addProjects));
+//app.post('/addprojects', ProjectMiddleware, catchErrors(ProjectCheck), urlencodedParser, catchErrors(addProjects));
+app.post('/addprojects', urlencodedParser, catchErrors(addProjects));
 app.post('/userupdate/:KT', urlencodedParser, catchErrors(userupdate));
 app.post('/projectupdate/:NR', urlencodedParser, catchErrors(projectupdate));
 app.post('/tulkurupdate/:NR', urlencodedParser, catchErrors(tulkurupdate));
