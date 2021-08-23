@@ -50,6 +50,19 @@ async function insert(_query, _values){
 	return success; 
 }
 
+async function update(_query, _values){
+	let success = true; 
+
+	try {
+		 await query(_query, _values);
+	}
+	catch(e){
+		console.error('-Error inserting-', e);
+		success = false;
+	}
+	return success; 
+}
+
 //query('SELECT * FROM tblTulkur, tblVinna, tblVerkefni WHERE tblTulkur.KT=tblVinna.KT AND tblVinna.NR=tblVerkefni.NR');
 
 module.exports = { query, list, insert }; 

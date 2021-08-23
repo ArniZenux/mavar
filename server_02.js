@@ -139,7 +139,7 @@ async function ProjectCheck(req, res, next) {
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Bæta nýtt verkefni';
     const sql = "SELECT * FROM tblTulkur";
-    const model = 'Arni'; 
+    //const model = 'Arni'; 
 
     const {
       heiti, dagur, stadur, timi_byrja, timi_endir, vettvangur
@@ -232,8 +232,7 @@ async function addUsers(req, res){
     const errors = []; 
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Bæta nýr táknamálstúlk';
-    console.log('Request for home rec');
-
+    
     res.render('addusers', {errors, title, subtitle });
 }  
    
@@ -317,16 +316,14 @@ async function addProjects(req, res){
 /***********/
 async function user_select(req, res){
     const kt = [req.params.kt];
+    console.log('kt ' + kt);
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Uppfæra túlk'; 
-    const sql = "SELECT * FROM tblTulkur WHERE KT = $1"; 
-    
+    const sql = "SELECT * FROM tblTulkur WHERE kt = $1"; 
+
     try{
-        await db.get(sql, KT, (err, rows) => {
-                if(err) return console.error(err.message); 
-                console.log("KT: ", KT);
-                res.render('userupdate', {errors: [], subtitle : subtitle, title : title, model : rows })
-        }) 
+        const rows = await list(sql, kt); 
+        res.render('userupdate', {errors: [], subtitle : subtitle, title : title, model : rows })
     }
     catch(e){
         console.error(e); 
@@ -337,17 +334,15 @@ async function user_select(req, res){
 // Uppfæra //
 /***********/
 async function project_select(req, res){
-    const NR = req.params.NR;
+    const nr = [req.params.nr];
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Uppfæra verkefni'; 
-    const sql = "SELECT * FROM tblTulkur, tblVinna, tblVerkefni WHERE tblTulkur.KT=tblVinna.KT AND tblVinna.NR=tblVerkefni.NR AND tblVerkefni.NR = ?"; 
+    const sql = "SELECT * FROM tblTulkur, tblVinna, tblVerkefni WHERE tblTulkur.kt=tblVinna.kt AND tblVinna.nr=tblVerkefni.nr AND tblVerkefni.nr = $1"; 
+    
     try{
-       await db.get(sql, NR, (err, rows) => {
-                if(err) return console.error(err.message); 
-                console.log("Númer verkefnis: ", NR);
-                res.render('projectupdate', {subtitle : subtitle, title : title, model : rows })
-        }) 
-    }
+       const rows = await list(sql, nr); 
+       res.render('projectupdate', {subtitle : subtitle, title : title, model : rows })
+     }
     catch(e){
         console.error(e); 
     }
@@ -357,32 +352,16 @@ async function project_select(req, res){
 // Uppfæra //
 /***********/
 async function tulkur_select(req, res){
-    const NR = req.params.NR;
+    const nr = [req.params.nr];
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Skipta túlk'; 
-    const sql_tulkur = "SELECT * FROM tblTulkur, tblVinna WHERE tblTulkur.KT = tblVinna.KT AND tblVinna.NR = ?"; 
+    const sql_tulkur = "SELECT * FROM tblTulkur, tblVinna WHERE tblTulkur.kt = tblVinna.kt AND tblVinna.nr = $1"; 
     const sql_all_tulkur = "SELECT * FROM tblTulkur"; 
-    var all_tulkur = '';
-    var one_tulkur = '';
+   
     try{
-        await db.get(sql_tulkur, NR , (err, row) => {
-            if(err){
-                return console.error(err.message); 
-            }
-            else{
-                console.log(row.KT + ' og nafn : ' + row.NAFN);
-                one_tulkur = row; 
-                db.all(sql_all_tulkur, [], (err, rows) => {
-                    if(err){
-                        return console.error(err.message);
-                    }
-                    else{
-                        all_tulkur = rows; 
-                        res.render('tulkurupdate', {subtitle : subtitle, title : title, one_tulkur : one_tulkur, all_tulkur : all_tulkur });
-                    }
-                });
-            }
-        });
+        const one_tulkur = await list(sql_tulkur, nr);
+        const all_tulkur = await list(sql_all_tulkur); 
+        res.render('tulkurupdate', {subtitle : subtitle, title : title, one_tulkur : one_tulkur, all_tulkur : all_tulkur });
     }
     catch(e){
         console.error(e); 
@@ -393,19 +372,21 @@ async function tulkur_select(req, res){
 // Uppfæra //
 /***********/
 async function userupdate(req, res){
-    const KT = req.params.KT;
-    const tulkur = [req.body.nafn, req.body.simanumer, req.body.email, KT];
-    const sql = "UPDATE tblTulkur SET NAFN = ?, SIMI = ? , NETFANG = ? WHERE (KT = ?)";
+    const kt = [req.params.kt];
+    console.log('kt ' + kt);
+    const tulkur = [req.body.nafn, req.body.simanumer, req.body.email, kt];
+    const sql = "UPDATE tblTulkur SET nafn = $1, simi = $2 , netfang = $3 WHERE kt = $4";
+    let success = true; 
+
     try{
-        await db.run(sql, tulkur, err => {
-                if (err){
-                    console.error(err.message); 
-                } 
-                else{
-                    res.redirect('/');
-                    console.log('Notandi uppfærður');
-                }
-        });
+        success = update(sql, kt); 
+        
+        if(success){
+            res.redirect('/');
+        }
+        else {
+            res.render('error', {title, suberror: 'Gat ekki skráð', subtitle : 'Hafði þú skrifað undir áður?'} ); 
+        }
     }
     catch(e){
         console.error(e); 
@@ -416,19 +397,20 @@ async function userupdate(req, res){
 // Uppfæra //
 /***********/
 async function projectupdate(req, res){
-    const NR = req.params.NR;
-    const verkefni = [req.body.HEITI, req.body.STADUR, req.body.DAGUR, req.body.TIMI_BYRJA, req.body.TIMI_ENDIR, req.body.VETTVANGUR, NR];
-    const sql = "UPDATE tblVerkefni SET HEITI = ?, STADUR = ?, DAGUR = ?, TIMI_BYRJA = ?, TIMI_ENDIR = ?, VETTVANGUR = ? WHERE (NR = ?)";
+    const nr = [req.params.nr];
+    const verkefni = [req.body.heiti, req.body.stadur, req.body.dagur, req.body.timi_byrja, req.body.timi_endir, req.body.vettvangur, nr];
+    const sql = "UPDATE tblVerkefni SET heiti = $1, stadur = $2, dagur = $3, timi_byrja = $4, timi_endir = $5, vettvangur = $6 WHERE nr = $7";
+    let succress = true; 
+
     try{
-        await db.run(sql, verkefni, err => {
-                if (err){
-                    console.error(err.message); 
-                } 
-                else{
-                    res.redirect('/');
-                    console.log('Verkefni uppfærð');
-                }
-        });
+        success = update(sql, kt); 
+        
+        if(success){
+            res.redirect('/');
+        }
+        else {
+            res.render('error', {title, suberror: 'Gat ekki skráð', subtitle : 'Hafði þú skrifað undir áður?'} );
+        }
     }
     catch(e){
         console.error(e); 
@@ -439,10 +421,22 @@ async function projectupdate(req, res){
 // Uppfæra //
 /***********/
 async function tulkurupdate(req, res){
-    const NR = req.params.NR;
-    const nafn = [req.body.NAFN];
-    const sql_select_kt = "SELECT KT FROM tblTulkur WHERE tblTulkur.NAFN = ?";
+    const nr = [req.params.nr];
+    const nafn = [req.body.nafn];
+    const sql_select_kt = "SELECT kt FROM tblTulkur WHERE tblTulkur.nafn = $1?";
+    let success = true; 
+
     try{
+        /*success = update(sql, kt); 
+        
+        if(success){
+            res.redirect('/');
+        }
+        else {
+            res.render('error', {title, suberror: 'Gat ekki skráð', subtitle : 'Hafði þú skrifað undir áður?'} );
+        }*/
+
+        /*
         await db.get(sql_select_kt, nafn, (err, rows)  => {
             if (err){
                 console.error(err.message); 
@@ -462,7 +456,7 @@ async function tulkurupdate(req, res){
                     }
                 });
             }
-        });
+        });*/
     }
     catch(e){
         console.error(e); 
