@@ -1,23 +1,14 @@
 Verkefnalist - 
+
 ###############
-# version 0.2 #
+# version 0.3 #
 ###############
-
-30-08-21
--0%     laga update í server_02.js.
--0%     búa til script fyrir sql.  Fake.sql og schema.sql. 
-
-27-08-21
--100%   postgresql og notandi virkar á öllum tölvum, 3. 
-
-25-08-21
--100%   breyta og nota postgresql í stað sqlite. 
+-0%     nota router og búa til fleira router - userRouter, ProjectRouter
+-0%     Búa til Calender 
+-0%     Láta verkefni túlka birta í calender.
+-0%     Skipta kennitala og nota starfsnúmer í stað - Random. 
 
 Add  of projects.
-- Nota router og búa til fleira router - userRouter, ProjectRouter
-- Búa til Calender 
-- Láta verkefni túlka birta í calender.
-- Skipta kennitala og nota starfsnúmer í stað - Random. 
 - að geta sett verkefni í tímaröð og ráða - nýjasta efst? eða nýjast neðst- báða möguleika. Röðin núna er óskipulögð
 - að geta leitað í grunninum, leitað að túlki, leitað að stað (til dæmis Marel) leita að döff og fleira 
 - að geta skráð tvo túlka í verkefni eða fleiri, stundum eru til dæmis 5-6 túlkar í sama verkefni
