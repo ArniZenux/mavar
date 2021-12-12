@@ -13,8 +13,6 @@
    </ol>
 </details>
 
-
-<!-- ABOUT THE PROJECT -->
 ## About The Project
 
 Einfalt bókunarkerfi fyrir túlkaþjónustu.
@@ -24,12 +22,4 @@ Einfalt bókunarkerfi fyrir túlkaþjónustu.
 * Node - Backend
 * Express - Backend
 * EJS - Frontend
-
-## The version
-* 0.1
-    1. Simply server
-    2. EJS 
-    3. Sqlite    
-* 0.2
-    1. Update new route
-    2. From Sqlite to PostgreSQL 
+ 

@@ -2,7 +2,7 @@
   "name": "mavar",
   "version": "1.0.0",
   "description": "Mávar - túlksþjónustan",
-  "main": "server_02.js",
+  "main": "server.js",
   "dependencies": {
     "body-parser": "^1.19.0",
     "ejs": "^3.1.6",
@@ -29,8 +29,7 @@
     "typescript": "^4.3.5"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "dev": "browser-sync start --server --files main.js **/*.js styles.css index.html"
   },
   "repository": {
     "type": "git",

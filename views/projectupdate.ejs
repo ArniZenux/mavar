@@ -3,42 +3,43 @@
 <br>
 
 <h2 class="header__title"><%= subtitle %></h2>
+<% for(let project of model) { %>
 
 <form method="post" action="/projectupdate/<%= model.nr %>">
 
     <div class="form-group">
       <label for="nationalId">Heiti</label>
-      <input type="text" class="form-control" name="HEITI" value="<%= model.heiti %>" >
+      <input type="text" class="form-control" name="HEITI" value="<%= project.heiti %>" >
     </div>  
     
     <div class="form-group">
       <label for="name">Staður</label>
-      <input type="text" class="form-control" name="STADUR" value="<%= model.stadur %>" >
+      <input type="text" class="form-control" name="STADUR" value="<%= project.stadur %>" >
     </div>
       
     <div class="form-group">
       <label for="nationalId">Dagur</label>
-      <input type="text" class="form-control" name="DAGUR" value="<%= model.dagur %>" >
+      <input type="text" class="form-control" name="DAGUR" value="<%= project.dagur %>" >
     </div>
 
     <div class="form-group">
       <label for="nationalId">Byrja</label>
-      <input type="text" class="form-control" name="TIMI_BYRJA" value="<%= model.timi_byrja %>" >
+      <input type="text" class="form-control" name="TIMI_BYRJA" value="<%= project.timi_byrja %>" >
     </div>
     
     <div class="form-group">
       <label for="nationalId">Endir</label>
-      <input type="text" class="form-control" name="TIMI_ENDIR" value="<%= model.timi_endir %>" >
+      <input type="text" class="form-control" name="TIMI_ENDIR" value="<%= project.timi_endir %>" >
     </div>
 
     <div class="form-group">
       <label for="nationalId">Vettvangur</label>
-      <input type="text" class="form-control" name="VETTVANGUR" value="<%= model.vettvangur %>" >
+      <input type="text" class="form-control" name="VETTVANGUR" value="<%= project.vettvangur %>" >
     </div>
     <br>
     <button class="btn btn-sm btn-success">Uppfæra verkefni</button> 
   </form>
-
+ <% } %>
 <br>
 
 <%- include('footer') -%> 

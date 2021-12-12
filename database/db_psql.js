@@ -65,4 +65,4 @@ async function update(_query, _values){
 
 //query('SELECT * FROM tblTulkur, tblVinna, tblVerkefni WHERE tblTulkur.KT=tblVinna.KT AND tblVinna.NR=tblVerkefni.NR');
 
-module.exports = { query, list, insert }; 
+module.exports = { query, list, insert, update }; 
