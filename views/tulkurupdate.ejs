@@ -3,17 +3,19 @@
 <br>
 
 <h2 class="header__title"><%= subtitle %></h2>
-
-<form method="post" action="/tulkurupdate/<%= one_tulkur.nr %>">
+<% for(let one_user of one_tulkur ) { %>
+<form method="post" action="/change_tulkur/<%= one_user.nr %>">
     
     <div class="form-group">
       <label for="nationalId">Nafn túlka er skráður í túlkaverkefni</label>
-      <input type="text" class="form-control" name="" placeholder="<%= one_tulkur.nafn %>" >
+        
+        <input type="text" class="form-control" name="" placeholder="<%= one_user.nafn %>" >
     </div>
-   
+<% } %>
+ 
     <div class="form-group">
       <label for="">Táknmálstúlkur</label>
-      <select class="form-control" id="NAFN" name="NAFN">
+      <select class="form-control" id="nafn" name="nafn">
         <% for(let user of all_tulkur) { %>
           <option name="NAFN"><%= user.nafn %></option>
         <% } %>

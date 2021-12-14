@@ -14,7 +14,7 @@ async function query(_query, values = []){
 
     try {
         const result = await client.query(_query, values);
-		//console.log('rows :>>', result.rows); 
+				//console.log('rows :>>', result.rows); 
         return result; 
     }catch(e) {
         console.log('Error setting', e); 

@@ -1,48 +1,95 @@
-//const db = require('../database/db.js');
-var dataModel = require('../models/data_model.js');
-const express = require('express');
-const fs = require('fs').promises;
-const router = express.Router(); 
-
-function catchErrors(fn){
-    return (req, res, next) => fn(req, res, next).catch(next); 
-}
-
-/**
- * Les inn lista af list úr JSON skrá.
- * @returns {promise} Promise sem inniheldur gögn úr JSON skrá
- */
- async function lesa(){
-    let openFile_ = null; 
-    try {
-        //openFile_ = await fs.open('./routes/tulkar.json', 'r');   
-        openFile_ = await fs.open('./routes/videos.json', 'r');   
-        var readFile_ = await fs.readFile(openFile_);  
-        var student = JSON.parse(readFile_); 
-        //console.log(student); 
-        return student; 
-    }    
-    catch(e){
-        throw new Error('Can´t read a JSON file!');
-    }
-    finally{
-        if(openFile_){
-            await openFile_.close(); 
-        }
-    }
-}
+var { list, insert, update } = require('./../database/db_psql');
 
 async function project(req, res){
-    const title = 'Verkefnalisti táknmálstúlka';
-
-    const { videos } = await lesa(); 
+    const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Verkefnalisti táknmálstúlka';
+    const sql = 'SELECT * FROM tblTulkur, tblVinna, tblVerkefni WHERE tblTulkur.kt=tblVinna.kt AND tblVinna.nr=tblVerkefni.nr';
     
-    if(!videos){
-        return next();
-    }
-    res.render('projects', { title, videos : videos });
+    const rows = await list(sql); 
+
+    res.render('projects', {title: title, subtitle: subtitle, model : rows});
 }
 
-router.get('/', catchErrors(project));
+async function addprojects(req, res){
+    const errors = []; 
+    const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Bæta nýtt verkefni'; 
+    const sql = 'SELECT * FROM tblTulkur';
+   
+    const rows = await list(sql);
+    
+    res.render('addprojects', {errors, title: title , subtitle : subtitle, model : rows }); 
+}
 
-module.exports = router; 
+async function project_select(req, res){
+    const nr = [req.params.nr];
+
+    const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Uppfæra verkefni'; 
+    const sql = "SELECT * FROM tblTulkur, tblVinna, tblVerkefni WHERE tblTulkur.kt=tblVinna.kt AND tblVinna.nr=tblVerkefni.nr AND tblVerkefni.nr = $1"; 
+    
+    try{
+       const rows = await list(sql, nr); 
+       res.render('projectupdate', {subtitle : subtitle, title : title, model : rows })
+     }
+    catch(e){
+        console.error(e); 
+    }
+}
+
+async function project_update(req, res){
+    const title = 'Mávar - túlkuþjónusta';
+
+    const verkefni = [req.body.heiti, req.body.stadur, req.body.dagur, req.body.timi_byrja, req.body.timi_endir, req.body.vettvangur, req.params.nr];
+    const sql = "UPDATE tblVerkefni SET heiti = $1, stadur = $2, dagur = $3, timi_byrja = $4, timi_endir = $5, vettvangur = $6 WHERE tblVerkefni.nr = $7";
+    let succress = true; 
+
+    try{
+        success = update(sql, verkefni); 
+        if(success){
+            res.redirect('/');
+        }
+        else {
+            res.render('error', {title, suberror: 'Gat ekki skráð', subtitle : 'Hafði þú skrifað undir áður?'} );
+        }
+    }
+    catch(e){
+        console.error(e); 
+    }
+}
+
+async function addProjects(req, res){
+    const sql_verkefni = "INSERT INTO tblVerkefni (heiti, stadur, dagur, timi_byrja, timi_endir, vettvangur) VALUES($1, $2, $3, $4, $5, $6)";
+    const verkefni = [req.body.heiti, req.body.stadur, req.body.dagur, req.body.timi_byrja, req.body.timi_endir, req.body.vettvangur];
+        
+    const sql_select_kt = 'SELECT kt FROM tblTulkur WHERE nafn = $1';
+    const nafn = [req.body.nafn];
+    
+    const sql_vinna = "INSERT INTO tblVinna(kt) VALUES($1)";
+    
+    let success = true; 
+    let success1 = true; 
+
+    try {
+        const res = await list(sql_select_kt, nafn); 
+        console.log(res); 
+        const obj = JSON.stringify(res);
+        const obj_s = obj.split(":");
+        const kt_ = obj_s[1];
+        const kt = kt_.slice(1,11);        
+        success = await insert(sql_verkefni, verkefni);
+        success1 = await insert(sql_vinna,[kt]);
+    }
+    catch(e){
+        console.error(e);
+    }
+
+    if(success && success1){
+        return res.redirect('/');
+    }
+    else{
+        res.render('error', {title, suberror: 'Gat ekki skráð', subtitle : 'Hafði þú skrifað undir áður?'} ); 
+    }
+}
+
+module.exports = { project, addprojects, project_select, project_update, addProjects }; 

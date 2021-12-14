@@ -5,36 +5,36 @@
 <h2 class="header__title"><%= subtitle %></h2>
 <% for(let project of model) { %>
 
-<form method="post" action="/projectupdate/<%= model.nr %>">
+<form method="post" action="/project_update/<%= project.nr %>" enctype="application/x-www-form-urlencoded">
 
     <div class="form-group">
       <label for="nationalId">Heiti</label>
-      <input type="text" class="form-control" name="HEITI" value="<%= project.heiti %>" >
+      <input type="text" class="form-control" name="heiti" value="<%= project.heiti %>" placeholder="<%= project.heiti %>">
     </div>  
     
     <div class="form-group">
       <label for="name">Staður</label>
-      <input type="text" class="form-control" name="STADUR" value="<%= project.stadur %>" >
+      <input type="text" class="form-control" name="stadur" value="<%= project.stadur %>" placeholder="<%= project.stadur %>"  >
     </div>
       
     <div class="form-group">
       <label for="nationalId">Dagur</label>
-      <input type="text" class="form-control" name="DAGUR" value="<%= project.dagur %>" >
+      <input type="text" class="form-control" name="dagur" value="<%= project.dagur %>" placeholder="<%= project.dagur %>" >
     </div>
 
     <div class="form-group">
       <label for="nationalId">Byrja</label>
-      <input type="text" class="form-control" name="TIMI_BYRJA" value="<%= project.timi_byrja %>" >
+      <input type="text" class="form-control" name="timi_byrja" value="<%= project.timi_byrja %>" placeholder="<%= project.timi_byrja %>" >
     </div>
     
     <div class="form-group">
       <label for="nationalId">Endir</label>
-      <input type="text" class="form-control" name="TIMI_ENDIR" value="<%= project.timi_endir %>" >
+      <input type="text" class="form-control" name="timi_endir" value="<%= project.timi_endir %>" placeholder="<%= project.timi_endir %>" >
     </div>
 
     <div class="form-group">
       <label for="nationalId">Vettvangur</label>
-      <input type="text" class="form-control" name="VETTVANGUR" value="<%= project.vettvangur %>" >
+      <input type="text" class="form-control" name="vettvangur" value="<%= project.vettvangur %>" placeholder="<%= project.vettvangur %>">
     </div>
     <br>
     <button class="btn btn-sm btn-success">Uppfæra verkefni</button> 

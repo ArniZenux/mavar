@@ -1,20 +1,14 @@
-//const db = require('../database/db.js');
-var dataModel = require('../models/data_model.js');
-const express = require('express');
-const router = express.Router(); 
-
-function catchErrors(fn){
-    return (req, res, next) => fn(req, res, next).catch(next); 
-}
+var { list } = require('./../database/db_psql');
 
 async function index(req, res){
-    const title = 'Mávar';
-    //const { tulkar } = await readList(); 
-    //const readList();
-    console.log('Request for home rec');
-    res.render('index', { title });
+    const title = 'Mávar - túlkuþjónusta';
+    const subtitle = 'Verkefnalisti táknmálstúlka';
+
+    const sql = 'SELECT * FROM tblTulkur, tblVinna, tblVerkefni WHERE tblTulkur.kt=tblVinna.kt AND tblVinna.nr=tblVerkefni.nr';
+
+    const rows = await list(sql); 
+
+    res.render('index', {title: title, subtitle: subtitle, model : rows});
 }
 
-router.get('/', catchErrors(index));
-
-module.exports = router; 
+module.exports = index;  

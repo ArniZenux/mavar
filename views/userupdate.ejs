@@ -3,13 +3,12 @@
 <br>
 
 <h2 class="header__title"><%= subtitle %></h2>
+
 <% for(let user of model) { %>
-
-<form method="post" action="/userupdate/<%= model.kt %>" enctype="application/x-www-form-urlencoded" >
-
+<form method="post" action="/update_user/<%= user.kt %>" enctype="application/x-www-form-urlencoded" >
     <div class="form-group">
       <label for="nationalId">Kennitala</label>
-      <input type="text" class="form-control" name="KT" value="<%= user.kt %>" placeholder="<%= user.kt %>" >
+      <input type="text" class="form-control" name="" placeholder="<%= user.kt %>" >
     </div>  
 
     <div class="field<%= locals.isInvalid('nafn', errors) ?  ' field--invalid' : '' %>">
@@ -19,12 +18,12 @@
       
     <div class="field<%= locals.isInvalid('simanumer', errors) ?  ' field--invalid' : '' %>">
       <label for="simanumer">Símanúmer</label>
-      <input type="text" class="form-control" name="simanumer" value="<%= user.simi %>" placeholder="<%= user.simi %>" >
+      <input type="text" class="form-control" name="simi" value="<%= user.simi %>" placeholder="<%= user.simi %>" >
     </div>
 
     <div class="field<%= locals.isInvalid('email', errors) ?  ' field--invalid' : '' %>">
       <label for="email">Netfang</label>
-      <input type="email" class="form-control" name="email" value="<%= user.netfang %>" placeholder="<%= user.netfang %>" >
+      <input type="email" class="form-control" name="netfang" value="<%= user.netfang %>" placeholder="<%= user.netfang %>" >
     </div>
     <br>
     
@@ -36,11 +35,9 @@
         <% }); %>
       </ul>
     <% } %>
-
     <br>
-
-    <a class="btn btn-sm btn-warning" href="/userupdate/<%= user.kt %>">Uppfæra</a>
-  <% } %>   
+   <% } %>   
+  <Button class="btn btn-sm btn-warning">Uppfæra</Button>
 </form>
 
 <br>
