@@ -1,6 +1,8 @@
 const pg = require('pg');
+const config = require('../config.js');
 
-const connectionString = 'postgres://notandi:mypass@localhost/mavardb';
+//const connectionString = 'postgres://notandi:mypass@localhost/mavardb';
+const connectionString = config.data.connection;
 
 const pool = new pg.Pool({ connectionString });
 
@@ -11,10 +13,10 @@ pool.on('error', (err) => {
 
 async function query(_query, values = []){
     const client = await pool.connect(); 
-
+    
     try {
         const result = await client.query(_query, values);
-				//console.log('rows :>>', result.rows); 
+		console.log('rows :>>', result.rows); 
         return result; 
     }catch(e) {
         console.log('Error setting', e); 
@@ -63,6 +65,18 @@ async function update(_query, _values){
 	return success; 
 }
 
+async function del(_query, _values){
+	let success = true; 
+
+	try {
+		 await query(_query, _values);
+	}
+	catch(e){
+		console.error('-Error inserting-', e);
+		success = false;
+	}
+	return success; 
+}
 //query('SELECT * FROM tblTulkur, tblVinna, tblVerkefni WHERE tblTulkur.KT=tblVinna.KT AND tblVinna.NR=tblVerkefni.NR');
 
-module.exports = { query, list, insert, update }; 
+module.exports = { query, list, insert, update, del}; 

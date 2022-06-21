@@ -47,7 +47,6 @@ async function user_select(req, res){
 
 async function user_pickup(req, res){
     const kt = [req.params.kt];
-    console.log('kt ' + kt);
     const title = 'Mávar - túlkuþjónusta';
     const subtitle = 'Táknmálstúlkur';
     const sql = 'SELECT * FROM tblTulkur, tblVinna, tblVerkefni WHERE tblTulkur.kt=tblVinna.kt AND tblVinna.nr=tblVerkefni.nr AND tblTulkur.kt = $1';
@@ -123,10 +122,10 @@ async function add_newuser(req, res){
 async function change_tulkur(req, res){
     const title = 'Mávar - túlkuþjónusta';
 
-    const sql = 'UPDATE tblVinna SET kt = $1 WHERE tblVinna.nr = $2';
+    const sql = 'UPDATE tblVinna SET kt = $1 WHERE nr = $2';
     const sql_select_kt = 'SELECT kt FROM tblTulkur WHERE nafn = $1';
     const nafn = [req.body.nafn];
-   
+    console.log(nafn);
     const kennt = await list(sql_select_kt, nafn); 
     const obj = JSON.stringify(kennt);
     const obj_s = obj.split(":");
@@ -135,6 +134,7 @@ async function change_tulkur(req, res){
     const change = [kt, req.params.nr];
 
     let success = true; 
+    console.log(change);
     
     try{
         success = update(sql, change); 

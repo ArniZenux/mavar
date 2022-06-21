@@ -11,4 +11,4 @@ async function index(req, res){
     res.render('index', {title: title, subtitle: subtitle, model : rows});
 }
 
-module.exports = index;  
+module.exports = index;     

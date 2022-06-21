@@ -1,0 +1,40 @@
+<%- include('header') -%>
+
+<br>
+
+<h2 class="header__title"><%= subtitle %></h2>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Heiti</th>
+      <th>Staður</th>
+      <th>Dagur</th>
+      <th>Byrja</th>
+      <th>Endir</th>
+      <th>Vettvangur</th>
+      <th>Túlkur</th>
+      
+      <th class="d-print-none">
+        <a class="btn btn-sm btn-success" href="addprojects">Bæta nýtt verkefni</a>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for(let project of model) { %>
+    <tr>
+      <td><%= project.heiti %></td>
+      <td><%= project.stadur %></td>
+      <td><%= project.dagur %></td>
+      <td><%= project.timi_byrja %></td>
+      <td><%= project.timi_endir %></td>
+      <td><%= project.vettvangur %></td>
+      <td><%= project.nafn %></td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<br>
+
+<%- include('footer') -%> 
